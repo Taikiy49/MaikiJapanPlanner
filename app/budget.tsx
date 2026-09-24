@@ -25,9 +25,9 @@ export default function Budget({ value, onChange }: { value: BudgetData; onChang
   }
   return <div className="page budget-page">
     <section className="budget-ledger">
-      <div><small>PERSONAL FINANCES</small><h1>Mia Budget</h1><p>Your income, commitments, and room to spend.</p></div>
+      <div><h1>Mia Budget</h1></div>
       <div className="paycheck-field"><label htmlFor="budget-paycheck">Monthly paycheck</label><div><DollarSign size={20}/><input id="budget-paycheck" aria-label="Monthly paycheck" type="number" min="0" step="0.01" value={value.paycheck || ""} onChange={(e) => onChange({ ...value, paycheck: Number(e.target.value) })}/></div><Recurring checked={value.paycheckRecurring} onChange={(checked) => onChange({ ...value, paycheckRecurring: checked })}/></div>
-      <div className={`remaining-number ${totals.remaining < 0 ? "negative" : ""}`}><span>Left after commitments</span><b>{money(totals.remaining)}</b><small>{totals.remaining < 0 ? "Your commitments are above this paycheck." : `${Math.round(value.paycheck ? totals.remaining / value.paycheck * 100 : 0)}% of this paycheck remains.`}</small></div>
+      <div className={`remaining-number ${totals.remaining < 0 ? "negative" : ""}`}><span>Remaining</span><b>{money(totals.remaining)}</b>{totals.remaining < 0 && <small>Over budget</small>}</div>
     </section>
 
     <section className="budget-summary" aria-label="Budget summary">
@@ -35,7 +35,7 @@ export default function Budget({ value, onChange }: { value: BudgetData; onChang
     </section>
 
     <section className="budget-grid">
-      <div className="card commitments-card"><header><div><small>MONTHLY COMMITMENTS</small><h2>Where the paycheck goes</h2></div><button className="soft" onClick={addItem}><CirclePlus size={16}/> Add</button></header>
+      <div className="card commitments-card"><header><h2>Commitments</h2><button className="soft" aria-label="Add commitment" title="Add commitment" onClick={addItem}><CirclePlus size={18}/></button></header>
         <div className="commitment-list">{value.items.map((item) => <div className="commitment-row" key={item.id}>
           <input aria-label="Commitment name" value={item.name} onChange={(e) => updateItem(item.id, { name: e.target.value })}/>
           <select aria-label={`${item.name} type`} value={item.kind} onChange={(e) => updateItem(item.id, { kind: e.target.value as BudgetItem["kind"] })}><option value="bill">Bill</option><option value="saving">Savings</option></select>
@@ -46,10 +46,10 @@ export default function Budget({ value, onChange }: { value: BudgetData; onChang
         <footer><label>Month<input aria-label="Budget month" type="month" value={month} onChange={(e) => setMonth(e.target.value)}/></label><button className="primary" onClick={record}><CalendarPlus size={16}/> Record month</button></footer>
       </div>
 
-      <div className="card budget-ai"><header><Bot size={20}/><div><small>SMART ENTRY</small><h2>Tell Mia Budget</h2></div></header><p>Write it naturally. Values are applied to the editable fields, never recorded until you choose.</p><textarea className="resize-none" aria-label="Describe your budget" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="My paycheck is $4,200. Rent is $1,600, car loan $450, and move $600 to savings every month."/><button className="primary" disabled={busy || !prompt.trim()} onClick={smartAdd}>{busy ? "Reading…" : "Apply message"}</button>{message && <div className="budget-message" role="status">{message}</div>}</div>
+      <div className="card budget-ai"><header><Bot size={20}/><h2>Quick entry</h2></header><textarea className="resize-none" aria-label="Describe your budget" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="Paycheck $4,200, rent $1,600, car $450, savings $600…"/><button className="primary" disabled={busy || !prompt.trim()} onClick={smartAdd}>{busy ? "Reading…" : "Apply"}</button>{message && <div className="budget-message" role="status">{message}</div>}</div>
     </section>
 
-    <section className="card budget-history"><header><div><small>MONTHLY VIEW</small><h2>Spending and savings trend</h2></div><LineChart size={20}/></header>{value.months.length ? <BudgetChart months={value.months}/> : <div className="budget-empty"><LineChart size={28}/><h3>No monthly history yet</h3><p>Record a month to start comparing bills, savings, and what remained.</p></div>}</section>
+    <section className="card budget-history"><header><h2>Monthly trends</h2><LineChart size={20}/></header>{value.months.length ? <BudgetChart months={value.months}/> : <div className="budget-empty"><LineChart size={28}/><p>Record a month to see your trends.</p></div>}</section>
   </div>;
 }
 

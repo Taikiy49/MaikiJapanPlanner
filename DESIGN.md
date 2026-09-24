@@ -53,6 +53,7 @@ Use borders first. Working cards have no shadow; reserve restrained shadows for 
 Cards are softly rounded; controls are tighter. Avoid excessive pill shapes and icon tiles.
 
 ## Components
+Toolbar actions use SVG icons with accessible names and tooltips. Search, time, and action controls share a 38px height. Trip selection lives in the top context row, alongside the current section title, with create/delete actions preserved. Hide routine successful sync copy; retain visible save failures. Summary cards omit explanatory captions and use compact padding. Prefer short budget headings over decorative labels and paragraphs.
 Forms use visible labels, native semantic controls, explicit status feedback, and reversible editing where practical. Charts use the same blue family with text values available outside color alone.
 
 ## Do's and Don'ts

@@ -967,7 +967,7 @@ export default function Home() {
             </button>
           ))}
         </nav>
-        <section className="trip-switcher">
+        <section className="trip-switcher" hidden>
           <div className="trip-switcher-head">
             <small>MY TRIPS</small>
             <button aria-label="Create a new trip" onClick={() => setModal("trip")}><CirclePlus size={17} /></button>
@@ -1018,28 +1018,38 @@ export default function Home() {
               ))}
             </select>
           </label>
-          <span className="sync-state" title={syncStatus}>{syncStatus}</span>
+          {(/unavailable|failed|error|not saved|offline/i.test(syncStatus)) && <span className="sync-state" role="status">{syncStatus}</span>}
           <div className="history-controls" role="group" aria-label="Change history">
             <button type="button" onClick={undoChange} disabled={!historyStatus.undo} aria-label="Undo last change" title="Undo (Ctrl/Cmd+Z)">
-              <Undo2 size={17} /><span>Undo</span>
+              <Undo2 size={17} />
             </button>
             <button type="button" onClick={redoChange} disabled={!historyStatus.redo} aria-label="Redo last change" title="Redo (Ctrl/Cmd+Shift+Z or Ctrl+Y)">
-              <Redo2 size={17} /><span>Redo</span>
+              <Redo2 size={17} />
             </button>
           </div>
-          <button className="soft" onClick={() => setModal("person")}>
-            <Users size={17} /> Person
+          <button className="soft" aria-label="Add traveler" title="Add traveler" onClick={() => setModal("person")}>
+            <Users size={17} />
           </button>
           <button
             className="primary"
+            aria-label={tab === "Expenses" ? "Add expense" : "Add itinerary item"}
+            title={tab === "Expenses" ? "Add expense" : "Add itinerary item"}
             onClick={() => {
               if (tab === "Expenses") setModal("expense");
               else openPlanModal();
             }}
           >
-            <CirclePlus size={17} /> Add
+            <CirclePlus size={17} />
           </button>
         </header>
+        {tab !== "Mia Budget" && <div className="trip-context">
+          <span className="trip-context-title">{tab}</span>
+          <select aria-label="Select trip" value={activeTripId} onChange={(event) => switchTrip(event.target.value)}>
+            {trips.map((trip) => <option value={trip.id} key={trip.id}>{trip.id === activeTripId ? tripName : trip.tripName}</option>)}
+          </select>
+          <button aria-label="Create trip" title="Create trip" onClick={() => setModal("trip")}><CirclePlus size={18}/></button>
+          {trips.length > 1 && <button aria-label="Delete current trip" title="Delete current trip" onClick={requestRemoveCurrentTrip}><Trash2 size={16}/></button>}
+        </div>}
         {tab === "Overview" && (
           <div className="page">
             <section className="hero">
