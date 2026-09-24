@@ -32,7 +32,7 @@ aside nav button.active { background: #ffffff18; border-color: #ffffff22; box-sh
 .shell .workspace > header .search, .shell .workspace > header .timezone-picker { display: flex; height: 38px; min-height: 38px; margin: 0; padding: 0 12px; border: 1px solid #d7e3ee; border-radius: 9px; background: #fff; box-shadow: none; }
 .shell .workspace > header .search { flex: 1 1 440px; max-width: 620px; min-width: 100px; }
 .shell .workspace > header .search input { min-height: 0; height: 36px; width: 100%; font-size: 13px; }
-.shell .workspace > header .timezone-picker { flex: 0 0 auto; gap: 8px; }
+.shell .workspace > header .timezone-picker { flex: 0 0 auto; gap: 8px; margin-left: auto; }
 .shell .timezone-picker span, .shell .timezone-picker select { font: 500 12px "Segoe UI",sans-serif; }
 .shell .workspace > header > button { display: inline-flex; align-items: center; justify-content: center; width: 38px; min-width: 38px; height: 38px; min-height: 38px; padding: 0; }
 .shell .history-controls { height: 38px; padding: 0; border-radius: 9px; box-shadow: none; }
@@ -160,7 +160,7 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
   .shell .workspace > header { display: flex; flex-wrap: wrap; gap: 8px; min-height: 0; padding: 10px 12px; }
   .shell .workspace > header .mobile-logo { display: none; }
   .shell .workspace > header .search { order: 0; flex: 1 1 100%; max-width: none; }
-  .shell .workspace > header .timezone-picker { order: 1; margin-right: auto; max-width: none; padding-inline: 8px; }
+  .shell .workspace > header .timezone-picker { order: 1; margin-left: auto; margin-right: 0; max-width: none; padding-inline: 8px; }
   .shell .workspace > header .timezone-picker > span { display: inline; }
   .shell .workspace > header .timezone-picker select { max-width: 96px; }
   .shell .workspace > header .history-controls { order: 2; }

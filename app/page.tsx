@@ -1030,15 +1030,7 @@ export default function Home() {
           <button className="soft" aria-label="Add traveler" title="Add traveler" onClick={() => setModal("person")}>
             <Users size={17} />
           </button>
-          <button
-            className="primary"
-            aria-label={tab === "Expenses" ? "Add expense" : "Add itinerary item"}
-            title={tab === "Expenses" ? "Add expense" : "Add itinerary item"}
-            onClick={() => {
-              if (tab === "Expenses") setModal("expense");
-              else openPlanModal();
-            }}
-          >
+          <button className="primary" aria-label={tab === "Expenses" ? "Add expense" : "Add itinerary item"} title={tab === "Expenses" ? "Add expense" : "Add itinerary item"} onClick={() => { if (tab === "Expenses") setModal("expense"); else openPlanModal(); }}>
             <CirclePlus size={17} />
           </button>
         </header>
