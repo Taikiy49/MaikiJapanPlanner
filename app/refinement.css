@@ -1,7 +1,14 @@
 /* Quiet blue surfaces, aligned fields, and compact readable typography. */
 :root { --ink: #203953; --muted: #60758a; --line: #dfe7ef; --shadow: 0 4px 16px #20395308; }
 body { background: #f4f7fb; font-family: "Segoe UI", "Avenir Next", sans-serif; -webkit-font-smoothing: antialiased; }
-.shell > aside { background: #214c73; box-shadow: none; }
+.shell > aside { width: 190px; padding: 24px 12px; background: #214c73; box-shadow: none; }
+.shell .workspace { margin-left: 190px; }
+.shell .brand { display: flex; align-items: center; gap: 12px; padding-inline: 4px; }
+.shell .brand > i { display: grid; place-items: center; align-self: center; flex: 0 0 30px; width: 30px; height: 44px; margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.shell .brand > div { display: flex; align-items: center; }
+.shell .brand b { font-size: 18px; line-height: 1.2; white-space: normal; }
+.shell aside nav button { padding-inline: 10px; }
+@media (max-width: 900px) { .shell .workspace { margin-left: 0; } }
 .brand b { font-family: inherit; font-size: 20px; letter-spacing: -.04em; }
 aside nav button { border-radius: 9px; font-weight: 600; }
 .workspace > header { background: #f9fbfd; box-shadow: none; border-bottom: 1px solid var(--line); }

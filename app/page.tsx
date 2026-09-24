@@ -951,7 +951,7 @@ export default function Home() {
         <div className="brand">
           <i aria-label="Airplane"><Plane size={21} strokeWidth={2.2} /></i>
           <div>
-              <b>Miaki Planner</b>
+              <b>Miaki<br />Planner</b>
             <small>group trip planner</small>
           </div>
         </div>
