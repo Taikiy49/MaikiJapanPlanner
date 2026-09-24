@@ -661,7 +661,7 @@ export default function Home() {
   const modalCopy = modal
     ? {
         plan: editing ? ["UPDATE THE AGENDA", "Edit itinerary item", "Change the details without starting over."] : ["A NEW MEMORY", "Add to the itinerary", "Anything the group wants to remember."],
-        person: ["THE MORE, THE MERRIER", "Manage travelers", "Add or remove people from this trip."],
+        person: ["", "Travelers", ""],
         expense: editing?.type === "expense" ? ["UPDATE THE PURCHASE", "Edit expense", "Adjust the amount, payer, or split."] : ["SPLIT IT FAIRLY", "Add an expense", "Choose who paid and who shared it."],
         reservation: ["KEEP IT TOGETHER", "Add a reservation", "Save the details the group will need later."],
         assistant: ["SMART TRIP CHECK", "Ask Miaki", "Get a trip-aware review of plans, bookings, and loose ends."],
@@ -1036,11 +1036,13 @@ export default function Home() {
         </header>
         {tab !== "Mia Budget" && <div className="trip-context">
           <span className="trip-context-title">{tab}</span>
-          <select aria-label="Select trip" value={activeTripId} onChange={(event) => switchTrip(event.target.value)}>
-            {trips.map((trip) => <option value={trip.id} key={trip.id}>{trip.id === activeTripId ? tripName : trip.tripName}</option>)}
-          </select>
-          <button aria-label="Create trip" title="Create trip" onClick={() => setModal("trip")}><CirclePlus size={18}/></button>
-          {trips.length > 1 && <button aria-label="Delete current trip" title="Delete current trip" onClick={requestRemoveCurrentTrip}><Trash2 size={16}/></button>}
+          <details className="trip-menu" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) event.currentTarget.open = false; }} onKeyDown={(event) => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>
+            <summary aria-label="Select trip">{tripName}</summary>
+            <div className="trip-menu-panel" onClick={(event) => { if ((event.target as HTMLElement).closest("button")) event.currentTarget.closest("details")?.removeAttribute("open"); }}>
+              {trips.map((trip) => <button key={trip.id} className={trip.id === activeTripId ? "selected" : ""} aria-current={trip.id === activeTripId ? "true" : undefined} onClick={() => switchTrip(trip.id)}><span>{trip.id === activeTripId ? tripName : trip.tripName}</span>{trip.id === activeTripId && <Check size={16}/>}</button>)}
+              <div className="trip-menu-actions"><button onClick={() => setModal("trip")}><CirclePlus size={17}/> Create trip</button>{trips.length > 1 && <button onClick={requestRemoveCurrentTrip}><Trash2 size={17}/> Delete current trip</button>}</div>
+            </div>
+          </details>
         </div>}
         {tab === "Overview" && (
           <div className="page">
@@ -1549,9 +1551,9 @@ export default function Home() {
             <button className="close" aria-label="Close dialog" onClick={() => setModal(null)}>
               <X size={19} />
             </button>
-            <small>{modalCopy?.[0]}</small>
+            {modalCopy?.[0] && <small>{modalCopy[0]}</small>}
             <h2 id="modal-title">{modalCopy?.[1]}</h2>
-            <p>{modalCopy?.[2]}</p>
+            {modalCopy?.[2] && <p>{modalCopy[2]}</p>}
             {modal === "plan" ? (
               <form key={editing ? `${editing.type}-${editing.item.id}` : "new-plan"} onSubmit={addPlan}>
                 <label>
@@ -1592,14 +1594,15 @@ export default function Home() {
                     <div className="traveler-item" key={person.id}>
                       <Avatar p={person} />
                       <b>{person.name}</b>
-                      <button type="button" className="edit" aria-label={`Edit ${person.name}`} onClick={() => setEditing({ type: "person", item: person })}><Pencil size={14} /> Edit</button>
+                      <button type="button" className="edit" aria-label={`Edit ${person.name}`} title={`Edit ${person.name}`} onClick={() => setEditing({ type: "person", item: person })}><Pencil size={17} /></button>
                       <button
                         type="button"
                         aria-label={`Remove ${person.name}`}
+                        title={people.length <= 1 ? "Keep at least one traveler" : `Remove ${person.name}`}
                         disabled={people.length <= 1}
                         onClick={() => requestRemovePerson(person)}
                       >
-                        Remove
+                        <Trash2 size={17} />
                       </button>
                     </div>
                   ))}
