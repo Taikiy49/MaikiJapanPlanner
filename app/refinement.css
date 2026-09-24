@@ -11,7 +11,11 @@ aside nav button { border-radius: 9px; font-weight: 600; }
 .soft { box-shadow: none; border-radius: 9px; }
 .hero { background: #fff; box-shadow: none; border: 1px solid var(--line); }
 .hero .hero-copy { padding: 20px; flex-wrap: wrap; gap: 14px; }
-.hero .trip-name { font-size: clamp(25px,3vw,36px); letter-spacing: -.04em; }
+.hero .trip-name { font-size: clamp(25px,3vw,36px); letter-spacing: -.04em; line-height: 1.35; min-height: 1.65em; height: auto; padding: .12em 0 .18em; margin: 0; border: 0; border-radius: 4px; field-sizing: content; resize: none; }
+.hero .trip-name:hover { background: transparent; }
+.hero .trip-name:focus { background: #f4f8fc; }
+.card:hover, .stats article:hover, .hub-stats > div:hover { transform: none; box-shadow: none; border-color: var(--line); }
+.stats article, .stats article:hover { transition: none; background: transparent; }
 .card h2, .overview-center h2 { font-family: inherit; font-size: 22px; letter-spacing: -.035em; }
 .page { max-width: 1480px; margin-inline: auto; }
 .brand { padding-bottom: 24px; }
