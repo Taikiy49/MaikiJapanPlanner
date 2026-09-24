@@ -946,7 +946,7 @@ export default function Home() {
     setToast("Trip backup downloaded");
   }
   return (
-    <main className="shell">
+    <main className={`shell${tab === "Mia Budget" ? " budget-workspace" : ""}`}>
       <aside>
         <div className="brand">
           <i aria-label="Airplane"><Plane size={21} strokeWidth={2.2} /></i>

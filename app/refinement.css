@@ -1,0 +1,67 @@
+/* Quiet blue surfaces, aligned fields, and compact readable typography. */
+:root { --ink: #203953; --muted: #60758a; --line: #dfe7ef; --shadow: 0 4px 16px #20395308; }
+body { background: #f4f7fb; }
+.shell > aside { background: #214c73; box-shadow: none; }
+.brand b { font-family: inherit; font-size: 20px; letter-spacing: -.04em; }
+aside nav button { border-radius: 9px; font-weight: 600; }
+.workspace > header { background: #f9fbfd; box-shadow: none; border-bottom: 1px solid var(--line); }
+.card, .card:hover, .stats article, .unified-day, .essential-card { box-shadow: none; border-color: var(--line); }
+.primary { background: #245d8b; box-shadow: none; border-radius: 9px; }
+.primary:hover { background: #1f4f7a; box-shadow: none; }
+.soft { box-shadow: none; border-radius: 9px; }
+.hero { background: #fff; box-shadow: none; border: 1px solid var(--line); }
+.hero .hero-copy { padding: 20px; flex-wrap: wrap; gap: 14px; }
+.hero .trip-name { font-size: clamp(25px,3vw,36px); letter-spacing: -.04em; }
+.card h2, .overview-center h2 { font-family: inherit; font-size: 22px; letter-spacing: -.035em; }
+.budget-workspace .trip-switcher, .budget-workspace .search, .budget-workspace .timezone-picker,
+.budget-workspace .mobile-trip-picker, .budget-workspace .workspace > header > .soft,
+.budget-workspace .workspace > header > .primary { display: none; }
+.budget-workspace .workspace > header { justify-content: flex-end; }
+.budget-page { max-width: 1440px; }
+.budget-ledger { grid-template-columns: minmax(0,1fr) minmax(190px,.7fr) minmax(200px,.8fr); align-items: center; padding: 24px; gap: 24px; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: none; color: var(--ink); }
+.budget-ledger h1 { color: var(--ink); font-size: clamp(28px,3vw,38px); line-height: 1.15; }
+.budget-ledger p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.budget-ledger small { color: #537797; font-size: 11px; letter-spacing: .07em; }
+.paycheck-field { color: var(--muted); font-size: 13px; font-weight: 500; }
+.paycheck-field > div { background: #f7fafd; border: 1px solid #ccdbe8; border-radius: 8px; }
+.paycheck-field input { color: var(--ink); font-size: 26px; font-weight: 600; }
+.paycheck-field .recurring { color: var(--muted); }
+.remaining-number { padding-left: 24px; border-color: var(--line); }
+.remaining-number span, .remaining-number small { color: var(--muted); font-size: 12px; letter-spacing: 0; }
+.remaining-number b { color: #245d8b; font-size: clamp(30px,3.2vw,44px); font-weight: 650; }
+.remaining-number.negative b { color: #a03648; }
+.budget-summary { gap: 0; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.budget-summary > div { border: 0; border-radius: 0; background: transparent; min-height: 72px; }
+.budget-summary > div + div { border-left: 1px solid var(--line); }
+.budget-summary small { font-size: 12px; text-transform: none; letter-spacing: 0; font-weight: 500; }
+.budget-summary b { font-size: 22px; font-weight: 650; }
+.budget-grid { grid-template-columns: minmax(0,1fr) 300px; gap: 16px; }
+.commitments-card, .budget-ai, .budget-history { border-radius: 14px; padding: 20px; min-width: 0; }
+.commitments-card h2, .budget-ai h2, .budget-history h2 { font-size: 20px; font-weight: 650; }
+.commitments-card header small, .budget-ai header small, .budget-history header small { font-size: 10px; letter-spacing: .07em; font-weight: 650; }
+.commitment-row { grid-template-columns: minmax(100px,1fr) 88px 110px 85px 32px; gap: 8px; padding: 14px 0; }
+.commitment-row > input, .commitment-row > select, .money-input { min-width: 0; font-size: 13px; border-radius: 7px; background: #fff; }
+.recurring { font-size: 11px; font-weight: 500; min-height: 32px; cursor: pointer; }
+.recurring input { width: 15px; height: 15px; }
+.budget-ai { background: #f9fbfe; }
+.budget-ai > p, .budget-empty p, .budget-message { font-size: 13px; }
+.budget-ai textarea { font-size: 14px; background: #fff; border-radius: 8px; }
+.budget-empty { min-height: 150px; align-content: center; }
+.budget-empty h3 { font-size: 16px; font-weight: 600; }
+.chart-legend span, .chart-month > b, .chart-month > small { font-size: 12px; }
+.budget-page :is(input,select,textarea,button):focus-visible { outline: 2px solid #438bc2; outline-offset: 3px; }
+@media (max-width: 1200px) { .budget-grid { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) { .budget-ledger { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) {
+  .hero .hero-copy { padding: 16px; }
+  .budget-ledger { grid-template-columns: 1fr; gap: 18px; padding: 20px; }
+  .remaining-number { padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+  .budget-summary { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .budget-summary > div { padding: 10px 6px; gap: 0; }
+  .budget-summary i { display: none; }
+  .budget-summary b { font-size: 18px; overflow-wrap: anywhere; }
+  .budget-summary small { font-size: 11px; }
+  .commitments-card, .budget-ai, .budget-history { padding: 16px; }
+  .commitment-row { grid-template-columns: minmax(0,1fr) 96px 32px; }
+  .mobile-nav button { font-size: 10px; letter-spacing: -.025em; }
+}

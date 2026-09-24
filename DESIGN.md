@@ -47,7 +47,7 @@ Use the established sans stack. Money and time use tabular numerals. Large value
 Desktop uses a fixed sidebar and one natural document scroller. Mobile uses a fixed bottom navigation and stacked cards with no horizontal overflow.
 
 ## Elevation & Depth
-Use borders first and restrained blue shadows only for major floating or summary surfaces.
+Use borders first. Working cards have no shadow; reserve restrained shadows for floating dialogs. Runtime tokens live in app/globals.css with the shared refinement in app/refinement.css, imported last by the root layout.
 
 ## Shapes
 Cards are softly rounded; controls are tighter. Avoid excessive pill shapes and icon tiles.

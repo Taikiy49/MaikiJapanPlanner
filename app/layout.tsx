@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./refinement.css";
 
 export const metadata: Metadata = {
-  title: "Maiki — Japan Travel Planner",
-  description: "A cheerful, organized home for your Japan adventure.",
+  title: "Miaki Planner — Group Trip Planner",
+  description: "A cheerful place to plan any trip, split expenses, and settle up with friends.",
   icons: { icon: "/favicon.svg" },
 };
 

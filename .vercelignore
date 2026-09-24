@@ -1,4 +1,7 @@
 Galena4pileus.pem
-*.png
+/*.png
+*.pem
+.env*
+data/
 deploy/
 .tmp*

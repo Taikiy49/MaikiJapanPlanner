@@ -25,8 +25,8 @@ export default function Budget({ value, onChange }: { value: BudgetData; onChang
   }
   return <div className="page budget-page">
     <section className="budget-ledger">
-      <div><small>MIA BUDGET</small><h1>Your paycheck, already spoken for.</h1><p>Set the month once, keep recurring commitments, and see exactly what remains.</p></div>
-      <label className="paycheck-field"><span>Monthly paycheck</span><div><DollarSign size={20}/><input aria-label="Monthly paycheck" type="number" min="0" step="0.01" value={value.paycheck || ""} onChange={(e) => onChange({ ...value, paycheck: Number(e.target.value) })}/></div><Recurring checked={value.paycheckRecurring} onChange={(checked) => onChange({ ...value, paycheckRecurring: checked })}/></label>
+      <div><small>PERSONAL FINANCES</small><h1>Mia Budget</h1><p>Your income, commitments, and room to spend.</p></div>
+      <div className="paycheck-field"><label htmlFor="budget-paycheck">Monthly paycheck</label><div><DollarSign size={20}/><input id="budget-paycheck" aria-label="Monthly paycheck" type="number" min="0" step="0.01" value={value.paycheck || ""} onChange={(e) => onChange({ ...value, paycheck: Number(e.target.value) })}/></div><Recurring checked={value.paycheckRecurring} onChange={(checked) => onChange({ ...value, paycheckRecurring: checked })}/></div>
       <div className={`remaining-number ${totals.remaining < 0 ? "negative" : ""}`}><span>Left after commitments</span><b>{money(totals.remaining)}</b><small>{totals.remaining < 0 ? "Your commitments are above this paycheck." : `${Math.round(value.paycheck ? totals.remaining / value.paycheck * 100 : 0)}% of this paycheck remains.`}</small></div>
     </section>
 
