@@ -960,10 +960,12 @@ export default function Home() {
             <button
               className={tab === n ? "active" : ""}
               key={n}
+              aria-label={n}
+              aria-current={tab === n ? "page" : undefined}
               onClick={() => setTab(n)}
             >
               <span>{[<Compass key="o" />, <CalendarDays key="i" />, <BadgeDollarSign key="e" />, <Luggage key="p" />, <ClipboardList key="a" />, <WalletCards key="b" />][i]}</span>
-              {n}
+              <span className="sidebar-label">{n}</span>
             </button>
           ))}
         </nav>

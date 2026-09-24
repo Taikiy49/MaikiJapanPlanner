@@ -59,3 +59,6 @@ Forms use visible labels, native semantic controls, explicit status feedback, an
 
 ## Do's and Don'ts
 Do keep data scannable, use Lucide SVG icons, and preserve mobile reachability. Do not use emoji icons, black sidebars, oversized empty padding, or decorative gradients unrelated to hierarchy.
+
+Budget uses one compact paycheck-and-totals strip, 36px commitment fields, and short empty states. Keep the page identity in navigation instead of repeating it inside the budget. Use “Savings” consistently in summary and chart labels. Narrow screens wrap rows while retaining readable input text and natural document scrolling.
+Desktop pointer navigation rests as a 72px icon rail and expands to 190px on hover or keyboard-visible focus, overlaying the workspace without reflow. Touch navigation retains visible labels. Respect reduced motion and retain accessible names while labels are visually hidden.
