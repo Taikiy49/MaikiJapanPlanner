@@ -1092,7 +1092,7 @@ export default function Home() {
             </section>
             <section className="overview-center card">
               <div className="overview-center-head">
-                <div><small>TRIP COMMAND CENTER</small><h2>Everything important, up front</h2><p>Jump straight to a section or scan the trip without digging through menus.</p></div>
+                <div><h2>Your trip at a glance</h2></div>
                 <div className="overview-jumps">
                   <button onClick={() => setTab("Itinerary")}><CalendarDays size={17} /> Agenda <b>{plans.length + reservations.length}</b></button>
                   <button onClick={() => setTab("Expenses")}><BadgeDollarSign size={17} /> Expenses <b>{expenses.length}</b></button>
@@ -1104,7 +1104,7 @@ export default function Home() {
                 {overviewTimeline.length ? overviewTimeline.map((entry) => <button className="overview-preview-row" key={`${entry.source}-${entry.item.id}`} onClick={() => { if (entry.source === "reservation" && entry.item.flightNumber) window.open(flightStatusUrl(entry.item.flightNumber), "_blank", "noopener,noreferrer"); else { rememberAgendaDate(entry.date); setCalendarView("agenda"); setTab("Itinerary"); } }}><span>{shortDate(entry.date)}</span><div><b><em className={`event-tag ${entry.kind.toLowerCase()}`}>{entry.kind}</em>{entry.source === "reservation" && entry.item.flightNumber ? <span className="flight-number">{entry.item.flightNumber} ↗</span> : ""}{entry.source === "reservation" && entry.item.flightNumber ? " · " : ""}{entry.title}</b><small><strong>{friendlyTime(entry.time)}{entry.source === "reservation" && entry.item.arrivalTime ? ` → ${friendlyTime(entry.item.arrivalTime)}` : ""}</strong>{entry.location ? ` · ${entry.location}` : ""}</small></div></button>) : <Empty text="Nothing is scheduled yet. Add the first item to your agenda." />}
               </div>
               <div className="travel-essentials">
-                <div className="essentials-heading"><div><small>TRAVEL ESSENTIALS</small><h3>Important bookings, separated clearly</h3></div><button onClick={() => openPlanModal()}><CirclePlus size={15} /> Add booking</button></div>
+                <div className="essentials-heading"><div><h3>Your bookings</h3></div><button onClick={() => openPlanModal()}><CirclePlus size={15} /> Add booking</button></div>
                 <div className="essential-grid">
                   {[
                     { key: "flight", title: "Flights", hint: "Departure and arrival", items: flightBookings },

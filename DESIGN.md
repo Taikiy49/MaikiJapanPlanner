@@ -44,7 +44,7 @@ Blue communicates navigation and action. Pale blue may group information, but ic
 Use the established sans stack. Money and time use tabular numerals. Large values carry hierarchy; labels stay concise and uppercase only for utility captions.
 
 ## Layout
-Desktop uses a fixed sidebar and one natural document scroller. Mobile uses a fixed bottom navigation and stacked cards with no horizontal overflow.
+Desktop uses a fixed blue sidebar and one natural document scroller. The overview pairs a chronological schedule with a quieter bookings column beneath a compact summary strip. Mobile stacks these sections and retains bottom navigation. Use Segoe UI/Avenir Next for readable text, restrained 600-weight headings, and pale blue form surfaces. app/refinement.css owns this shared presentation.
 
 ## Elevation & Depth
 Use borders first. Working cards have no shadow; reserve restrained shadows for floating dialogs. Runtime tokens live in app/globals.css with the shared refinement in app/refinement.css, imported last by the root layout.
