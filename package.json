@@ -9,12 +9,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "npm run build",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
+    "ai": "^7.0.66",
     "drizzle-orm": "0.45.2",
+    "lucide-react": "^1.31.0",
     "next": "^16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"

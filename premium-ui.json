@@ -1,0 +1,19 @@
+{
+  "profile": "consumer-product",
+  "sourceRoots": ["app", "lib"],
+  "locale": "en-US",
+  "canonicalMap": "DESIGN.md",
+  "requiredCapabilities": ["Select/Listbox", "Date"],
+  "ownership": {
+    "Select/Listbox": "native",
+    "Date": "native"
+  },
+  "requiredCommands": ["unit", "premium"],
+  "commands": {
+    "unit": "npm test",
+    "premium": "audit_project.py . --mode strict"
+  },
+  "evidence": {
+    "budgetCalculations": "tests/budget.test.ts"
+  }
+}

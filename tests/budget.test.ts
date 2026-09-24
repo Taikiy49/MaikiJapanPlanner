@@ -1,0 +1,4 @@
+import test from "node:test"; import assert from "node:assert/strict";
+import { budgetTotals, emptyBudget, recordBudgetMonth } from "../lib/budget.ts";
+test("calculates paycheck less rent, car, and savings", () => { const data=emptyBudget(); data.paycheck=4200; data.items[0].amount=1600; data.items[1].amount=450; data.items[2].amount=600; assert.deepEqual(budgetTotals(data),{bills:2050,saved:600,committed:2650,remaining:1550}); });
+test("records one month and clears only non-recurring values", () => { const data=emptyBudget(); data.paycheck=3000; data.items.push({id:"once",name:"Repair",amount:250,recurring:false,kind:"bill"}); const next=recordBudgetMonth(data,"2026-09"); assert.equal(next.months[0].remaining,2750); assert.equal(next.items.at(-1)?.amount,0); assert.equal(next.paycheck,3000); });
