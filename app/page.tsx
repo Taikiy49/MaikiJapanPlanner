@@ -724,7 +724,7 @@ export default function Home() {
       setReservations((items) => editing?.type === "reservation" ? items.map((item) => item.id === editedId ? next : item) : [...items, next]);
       logActivity("Itinerary", editing ? "Updated" : "Added", `${next.title} · ${kind}`);
       setModal(null);
-      setToast(editing ? `${kind} updated` : `${kind} added to the agenda`);
+      setToast(editing ? `${kind} updated` : `${kind} added to the itinerary`);
       return;
     }
     const next: Plan = {
@@ -903,7 +903,7 @@ export default function Home() {
       `Next: ${nextTripEntry ? `${nextTripEntry.title} on ${nextTripEntry.date} at ${friendlyTime(nextTripEntry.time)}` : "No upcoming plan is scheduled."}`,
       missing.length
         ? `Confirm ${missing.map((item) => item.title).join(", ")} before departure.`
-        : "All saved reservations have confirmation numbers.",
+        : "All saved bookings have confirmation numbers.",
       crowdedDays.length
         ? `${crowdedDays.length} day${crowdedDays.length > 1 ? "s have" : " has"} more than three activities—leave room for transit and rest.`
         : "The itinerary has comfortable spacing.",
@@ -976,7 +976,7 @@ export default function Home() {
             {trips.map((trip) => (
               <button className={trip.id === activeTripId ? "active" : ""} key={trip.id} onClick={() => switchTrip(trip.id)}>
                 <span>{trip.tripName.slice(0, 1).toUpperCase()}</span>
-                <div><b>{trip.id === activeTripId ? tripName : trip.tripName}</b><small>{trip.id === activeTripId ? people.length : trip.people.length} travelers · {trip.id === activeTripId ? plans.length + reservations.length : trip.plans.length + trip.reservations.length} agenda items</small></div>
+                <div><b>{trip.id === activeTripId ? tripName : trip.tripName}</b><small>{trip.id === activeTripId ? people.length : trip.people.length} travelers · {trip.id === activeTripId ? plans.length + reservations.length : trip.plans.length + trip.reservations.length} itinerary items</small></div>
               </button>
             ))}
           </div>
@@ -1058,10 +1058,10 @@ export default function Home() {
                     className="primary"
                     onClick={() => setTab("Itinerary")}
                   >
-                    Open agenda →
+                    Open itinerary →
                   </button>
                   <span>{people.length} people</span>
-                  <span>{plans.length + reservations.length} agenda items</span>
+                  <span>{plans.length + reservations.length} itinerary items</span>
                   <span>{expenses.length} expenses</span>
                 </div>
               </div>
@@ -1069,7 +1069,7 @@ export default function Home() {
             <section className="stats">
               <Stat
                 icon={<Sparkles size={18} />}
-                label="AGENDA"
+                label="ITINERARY"
                 value={`${plans.length + reservations.length}`}
                 sub="scheduled trip items"
               />
@@ -1096,14 +1096,14 @@ export default function Home() {
               <div className="overview-center-head">
                 <div><h2>Your trip at a glance</h2></div>
                 <div className="overview-jumps">
-                  <button onClick={() => setTab("Itinerary")}><CalendarDays size={17} /> Agenda <b>{plans.length + reservations.length}</b></button>
+                  <button onClick={() => setTab("Itinerary")}><CalendarDays size={17} /> Itinerary <b>{plans.length + reservations.length}</b></button>
                   <button onClick={() => setTab("Expenses")}><BadgeDollarSign size={17} /> Expenses <b>{expenses.length}</b></button>
                   <button onClick={() => setTab("Packing")}><Luggage size={17} /> Packing <b>{packing.length}</b></button>
                 </div>
               </div>
               <div className="overview-timeline">
-                <div className="preview-title"><div><small>{overviewShowsHistory ? "TRIP HISTORY" : "NEXT UP"}</small><b>{overviewShowsHistory ? "Your latest trip moments" : "Your trip in order"}</b></div><button onClick={() => setTab("Itinerary")}>Open full agenda →</button></div>
-                {overviewTimeline.length ? overviewTimeline.map((entry) => <button className="overview-preview-row" key={`${entry.source}-${entry.item.id}`} onClick={() => { if (entry.source === "reservation" && entry.item.flightNumber) window.open(flightStatusUrl(entry.item.flightNumber), "_blank", "noopener,noreferrer"); else { rememberAgendaDate(entry.date); setCalendarView("agenda"); setTab("Itinerary"); } }}><span>{shortDate(entry.date)}</span><div><b><em className={`event-tag ${entry.kind.toLowerCase()}`}>{entry.kind}</em>{entry.source === "reservation" && entry.item.flightNumber ? <span className="flight-number">{entry.item.flightNumber} ↗</span> : ""}{entry.source === "reservation" && entry.item.flightNumber ? " · " : ""}{entry.title}</b><small><strong>{friendlyTime(entry.time)}{entry.source === "reservation" && entry.item.arrivalTime ? ` → ${friendlyTime(entry.item.arrivalTime)}` : ""}</strong>{entry.location ? ` · ${entry.location}` : ""}</small></div></button>) : <Empty text="Nothing is scheduled yet. Add the first item to your agenda." />}
+                <div className="preview-title"><div><small>{overviewShowsHistory ? "TRIP HISTORY" : "NEXT UP"}</small><b>{overviewShowsHistory ? "Your latest trip moments" : "Your trip in order"}</b></div><button onClick={() => setTab("Itinerary")}>Open full itinerary →</button></div>
+                {overviewTimeline.length ? overviewTimeline.map((entry) => <button className="overview-preview-row" key={`${entry.source}-${entry.item.id}`} onClick={() => { if (entry.source === "reservation" && entry.item.flightNumber) window.open(flightStatusUrl(entry.item.flightNumber), "_blank", "noopener,noreferrer"); else { rememberAgendaDate(entry.date); setCalendarView("agenda"); setTab("Itinerary"); } }}><span>{shortDate(entry.date)}</span><div><b><em className={`event-tag ${entry.kind.toLowerCase()}`}>{entry.kind}</em>{entry.source === "reservation" && entry.item.flightNumber ? <span className="flight-number">{entry.item.flightNumber} ↗</span> : ""}{entry.source === "reservation" && entry.item.flightNumber ? " · " : ""}{entry.title}</b><small><strong>{friendlyTime(entry.time)}{entry.source === "reservation" && entry.item.arrivalTime ? ` → ${friendlyTime(entry.item.arrivalTime)}` : ""}</strong>{entry.location ? ` · ${entry.location}` : ""}</small></div></button>) : <Empty text="Nothing is scheduled yet. Add the first item to your itinerary." />}
               </div>
               <div className="travel-essentials">
                 <div className="essentials-heading"><div><h3>Your bookings</h3></div><button onClick={() => openPlanModal()}><CirclePlus size={15} /> Add booking</button></div>
@@ -1114,7 +1114,7 @@ export default function Home() {
                     { key: "booking", title: "Tickets & bookings", hint: "Everything else reserved", items: otherBookings },
                   ].map((group) => <section className={`essential-card ${group.key}`} key={group.key}>
                     <header><i>{group.key === "flight" ? <Plane size={18} /> : group.key === "hotel" ? <HotelIcon size={18} /> : <Tickets size={18} />}</i><div><h4>{group.title}</h4><p>{group.hint}</p></div><b>{group.items.length}</b></header>
-                    <div>{group.items.length ? <>{group.items.slice(0, 3).map((item) => <button key={item.id} onClick={() => { if (item.flightNumber) window.open(flightStatusUrl(item.flightNumber), "_blank", "noopener,noreferrer"); else { rememberAgendaDate(item.date); setTab("Itinerary"); } }}><span><strong className={item.flightNumber ? "flight-number" : ""}>{item.flightNumber ? `${item.flightNumber} ↗` : item.title}</strong>{item.flightNumber && <small>{item.title}</small>}</span><em>{shortDate(item.date)} · {friendlyTime(item.time)}{item.arrivalTime ? ` → ${friendlyTime(item.arrivalTime)}` : ""}</em>{item.location && <small>{item.location}</small>}</button>)}{group.items.length > 3 && <button className="essential-more" onClick={() => setTab("Itinerary")}>+{group.items.length - 3} more · View all in agenda</button>}</> : <p className="essential-empty">No {group.title.toLowerCase()} added yet.</p>}</div>
+                    <div>{group.items.length ? <>{group.items.slice(0, 3).map((item) => <button key={item.id} onClick={() => { if (item.flightNumber) window.open(flightStatusUrl(item.flightNumber), "_blank", "noopener,noreferrer"); else { rememberAgendaDate(item.date); setTab("Itinerary"); } }}><span><strong className={item.flightNumber ? "flight-number" : ""}>{item.flightNumber ? `${item.flightNumber} ↗` : item.title}</strong>{item.flightNumber && <small>{item.title}</small>}</span><em>{shortDate(item.date)} · {friendlyTime(item.time)}{item.arrivalTime ? ` → ${friendlyTime(item.arrivalTime)}` : ""}</em>{item.location && <small>{item.location}</small>}</button>)}{group.items.length > 3 && <button className="essential-more" onClick={() => setTab("Itinerary")}>+{group.items.length - 3} more · View all in itinerary</button>}</> : <p className="essential-empty">No {group.title.toLowerCase()} added yet.</p>}</div>
                   </section>)}
                 </div>
               </div>
@@ -1181,7 +1181,7 @@ export default function Home() {
               <div><b>{plans.length}</b><span>plans</span></div>
               <div><b>{reservations.filter((item) => item.kind === "Flight").length}</b><span>flights</span></div>
               <div><b>{reservations.filter((item) => item.kind === "Hotel").length}</b><span>hotels</span></div>
-              <button onClick={() => openPlanModal()}><CirclePlus size={16} /> Add anything</button>
+              <button onClick={() => openPlanModal()}><CirclePlus size={16} /> Add itinerary item</button>
             </section>
             <div className="unified-days">
               {agendaDates.length ? agendaDates.map((date) => {
@@ -1215,7 +1215,7 @@ export default function Home() {
                     ))}
                   </div>
                 </section>;
-              }) : <div className="agenda-empty"><Empty text={searchText ? `No agenda items match “${query.trim()}”.` : "Your agenda is open. Add the first activity, flight, hotel, or booking."} />{!searchText && <button className="primary" onClick={() => openPlanModal()}><CirclePlus size={17} /> Add to agenda</button>}</div>}
+              }) : <div className="agenda-empty"><Empty text={searchText ? `No itinerary items match “${query.trim()}”.` : "Your itinerary is empty. Add the first activity, flight, hotel, or booking."} />{!searchText && <button className="primary" onClick={() => openPlanModal()}><CirclePlus size={17} /> Add to itinerary</button>}</div>}
             </div>
             <section className="agenda-extras">
               <div className="card notes-card"><Title over="KEEP HANDY" title="Trip notes" /><textarea value={tripNotes} onChange={(event) => setTripNotes(event.target.value)} placeholder="Emergency contacts, meetup details, hotel address, reminders…" /></div>
@@ -1229,10 +1229,10 @@ export default function Home() {
               big
               over="YOUR DAYS, YOUR WAY"
               title="Trip itinerary"
-              sub="Add anything, anywhere—then keep the whole group in sync."
+              sub="Add itinerary item, anywhere—then keep the whole group in sync."
               action={
                 <button className="primary" onClick={() => openPlanModal()}>
-                  <CirclePlus size={17} /> Add plan
+                  <CirclePlus size={17} /> Add itinerary item
                 </button>
               }
             />
@@ -1362,7 +1362,7 @@ export default function Home() {
                   </section>
                 ))
               ) : (
-                <div className="agenda-empty"><Empty text={`Nothing planned for ${new Date((calendarDate || todayKey) + "T12:00").toLocaleDateString("en", { month: "long", day: "numeric" })}.`} /><button className="primary" onClick={() => openPlanModal(calendarDate || todayKey)}><CirclePlus size={17} /> Add plan for this day</button></div>
+                <div className="agenda-empty"><Empty text={`Nothing planned for ${new Date((calendarDate || todayKey) + "T12:00").toLocaleDateString("en", { month: "long", day: "numeric" })}.`} /><button className="primary" onClick={() => openPlanModal(calendarDate || todayKey)}><CirclePlus size={17} /> Add itinerary item</button></div>
               )}
             </div>}
           </div>
@@ -1373,7 +1373,7 @@ export default function Home() {
               big
               over="EVERY DETAIL, ONE PLACE"
               title="Trip hub"
-              sub="Reservations, confirmations, links, and important notes."
+              sub="Bookings, confirmations, links, and important notes."
               action={
                 <button className="primary" onClick={() => setModal("reservation")}>
                   <CirclePlus size={17} /> Reservation
@@ -1381,14 +1381,14 @@ export default function Home() {
               }
             />
             <section className="hub-stats">
-              <div><small>RESERVATIONS</small><b>{reservations.length}</b><span>saved in one place</span></div>
+              <div><small>BOOKINGS</small><b>{reservations.length}</b><span>saved in one place</span></div>
               <div className={reservations.some((item) => !item.confirmation) ? "attention" : ""}><small>NEEDS ATTENTION</small><b>{reservations.filter((item) => !item.confirmation).length}</b><span>missing confirmations</span></div>
               <div><small>USEFUL LINKS</small><b>{tripLinks.length}</b><span>documents and references</span></div>
             </section>
             <section className="hub-layout">
               <div className="hub-main">
                 <section className="card reservations-card">
-                  <Title over="BOOKED & READY" title="Reservations" action={<button onClick={() => setModal("reservation")}>＋ Add</button>} />
+                  <Title over="BOOKED & READY" title="Bookings" action={<button onClick={() => setModal("reservation")}>＋ Add</button>} />
                   {reservations.length ? chronological(reservations).map((reservation) => (
                     <article className="reservation" key={reservation.id}>
                       <i>{reservation.kind === "Flight" ? <Plane size={18} /> : reservation.kind === "Hotel" ? <HotelIcon size={18} /> : reservation.kind === "Dining" ? <Utensils size={18} /> : reservation.kind === "Tickets" ? <Tickets size={18} /> : <Car size={18} />}</i>
@@ -1611,7 +1611,7 @@ export default function Home() {
                     placeholder="e.g. Jamie"
                     defaultValue={editing?.type === "person" ? editing.item.name : ""}
                   />
-                  <button className="primary">{editing?.type === "person" ? "Save name" : "Add traveler"}</button>
+                  <button className="primary">{editing?.type === "person" ? "Save traveler" : "Add traveler"}</button>
                 </form>
               </div>
             ) : modal === "reservation" ? (
@@ -1630,7 +1630,7 @@ export default function Home() {
                 </div>
                 <Field name="location" label="Location" placeholder="Address, airport, or venue" />
                 <Field name="confirmation" label="Confirmation number (optional)" required={false} placeholder="Booking reference" />
-                <button className="primary">Save reservation</button>
+                <button className="primary">Save booking</button>
               </form>
             ) : modal === "trip" ? (
               <form onSubmit={addTrip}>
@@ -1661,7 +1661,7 @@ export default function Home() {
             ) : modal === "assistant" ? (
               <div className="assistant-panel">
                 <div className="prompt-chips">
-                  {["What am I forgetting?", "Find schedule problems", "Make today easier", "Check our reservations"].map((prompt) => <button key={prompt} onClick={() => setAiQuestion(prompt)}>{prompt}</button>)}
+                  {["What am I forgetting?", "Find schedule problems", "Make today easier", "Check our bookings"].map((prompt) => <button key={prompt} onClick={() => setAiQuestion(prompt)}>{prompt}</button>)}
                 </div>
                 <form onSubmit={askAssistant}>
                   <label>Ask about this trip<textarea value={aiQuestion} onChange={(event) => setAiQuestion(event.target.value)} placeholder="What should we double-check before leaving?" required /></label>
@@ -1749,7 +1749,7 @@ export default function Home() {
             <h2 id="confirm-title">{confirming.type === "trip" ? `Delete “${tripName}”?` : `Remove ${confirming.item.name}?`}</h2>
             <p id="confirm-description">{confirming.type === "trip" ? "This removes the entire trip and everything saved inside it from the shared planner." : "This traveler will be removed from the trip. Their paid expenses will also be removed, and their packing items will become unassigned."}</p>
             {confirming.type === "trip" ? <div className="confirm-impact">
-              <span><b>{plans.length + reservations.length}</b> agenda items</span><span><b>{expenses.length}</b> expenses</span><span><b>{people.length}</b> travelers</span><span><b>{packing.length}</b> packing items</span>
+              <span><b>{plans.length + reservations.length}</b> itinerary items</span><span><b>{expenses.length}</b> expenses</span><span><b>{people.length}</b> travelers</span><span><b>{packing.length}</b> packing items</span>
             </div> : <div className="confirm-impact person-impact">
               <span><b>{expenses.filter((expense) => expense.paidBy === confirming.item.id).length}</b> paid expenses removed</span><span><b>{packing.filter((item) => item.ownerId === confirming.item.id).length}</b> packing items unassigned</span>
             </div>}

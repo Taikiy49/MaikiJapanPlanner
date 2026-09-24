@@ -53,6 +53,7 @@ Use borders first. Working cards have no shadow; reserve restrained shadows for 
 Cards are softly rounded; controls are tighter. Avoid excessive pill shapes and icon tiles.
 
 ## Components
+Use consistent user-facing nouns: Itinerary (never Agenda), traveler (never Person), booking (never Reservation), expense, packing item, and trip. Use these same terms in navigation, buttons, dialogs, empty states, and feedback. Internal data keys stay stable.
 Toolbar actions use SVG icons with accessible names and tooltips. Search, time, and action controls share a 38px height. Trip selection lives in the top context row, alongside the current section title, with create/delete actions preserved. Hide routine successful sync copy; retain visible save failures. Summary cards omit explanatory captions and use compact padding. Prefer short budget headings over decorative labels and paragraphs.
 Forms use visible labels, native semantic controls, explicit status feedback, and reversible editing where practical. Charts use the same blue family with text values available outside color alone.
 
