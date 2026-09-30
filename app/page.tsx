@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Budget from "./budget";
+import Notes from "./notes";
 import { BudgetData, emptyBudget } from "@/lib/budget";
 import {
   AlertTriangle, BadgeDollarSign, CalendarDays, CirclePlus, Compass, ExternalLink, Hotel as HotelIcon,
-  Car, Check, ClipboardList, DollarSign, Download, Luggage, Pencil, Plane, Printer, Redo2, Search, ShoppingBag,
+  Car, Check, NotebookPen, ClipboardList, DollarSign, Download, Luggage, Pencil, Plane, Printer, Redo2, Search, ShoppingBag,
   Sparkles, Tickets, TrainFront, Trash2, Undo2, UserRound, Users, Utensils, WalletCards, WandSparkles, X,
 } from "lucide-react";
 
@@ -571,7 +572,7 @@ export default function Home() {
         {},
       ),
     ),
-    nav = ["Overview", "Itinerary", "Expenses", "Packing", "Audit Log", "Mia Budget"];
+    nav = ["Overview", "Itinerary", "Expenses", "Packing", "Notes", "Audit Log", "Mia Budget"];
   const todayKey = now ? zonedDateKey(now, timezone) : "";
   const searchText = query.trim().toLowerCase();
   const visiblePlans = searchText ? plans.filter((item) => `${item.title} ${item.place} ${item.type} ${item.date} ${item.time}`.toLowerCase().includes(searchText)) : plans;
@@ -964,7 +965,7 @@ export default function Home() {
               aria-current={tab === n ? "page" : undefined}
               onClick={() => setTab(n)}
             >
-              <span>{[<Compass key="o" />, <CalendarDays key="i" />, <BadgeDollarSign key="e" />, <Luggage key="p" />, <ClipboardList key="a" />, <WalletCards key="b" />][i]}</span>
+              <span>{[<Compass key="o" />, <CalendarDays key="i" />, <BadgeDollarSign key="e" />, <Luggage key="p" />, <NotebookPen key="n" />, <ClipboardList key="a" />, <WalletCards key="b" />][i]}</span>
               <span className="sidebar-label">{n}</span>
             </button>
           ))}
@@ -1538,6 +1539,7 @@ export default function Home() {
             </section>
           </div>
         )}
+        {tab === "Notes" && <Notes key={activeTripId} tripId={activeTripId} value={tripNotes} onChange={setTripNotes} syncStatus={syncStatus} />}
         {tab === "Mia Budget" && <Budget value={budget} onChange={setBudget} />}
       </section>
       {modal && (
@@ -1778,7 +1780,7 @@ export default function Home() {
             key={n}
             onClick={() => setTab(n)}
           >
-              <span>{[<Compass key="o" />, <CalendarDays key="i" />, <BadgeDollarSign key="e" />, <Luggage key="p" />, <ClipboardList key="a" />, <WalletCards key="b" />][i]}</span>
+              <span>{[<Compass key="o" />, <CalendarDays key="i" />, <BadgeDollarSign key="e" />, <Luggage key="p" />, <NotebookPen key="n" />, <ClipboardList key="a" />, <WalletCards key="b" />][i]}</span>
             {n}
           </button>
         ))}

@@ -287,3 +287,18 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
 @media (prefers-reduced-motion: reduce) {
   .shell > aside, .shell aside .brand > div, .shell aside nav .sidebar-label { transition: none; }
 }
+
+.trip-notes-editor { padding: 20px; }
+.trip-notes-editor > label { display: block; font-size: 18px; font-weight: 650; color: var(--ink); }
+.trip-notes-editor > p, .notes-save-status, .notes-recovery p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.trip-notes-editor textarea { display: block; width: 100%; min-height: 360px; margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); font: inherit; font-size: 16px; line-height: 1.7; resize: none; }
+.trip-notes-editor textarea::placeholder { color: #68758a; }
+.notes-save-status { margin-top: 12px; min-height: 42px; }
+.notes-recovery { padding-block: 8px; }
+.notes-recovery button { min-height: 44px; }
+@media (max-width: 900px) {
+  .shell .mobile-nav { display: flex; overflow-x: auto; justify-content: flex-start; padding-bottom: env(safe-area-inset-bottom); }
+  .shell .mobile-nav button { flex: 1 0 64px; min-height: 56px; font-size: 11px; }
+  .trip-notes-editor { padding: 16px; }
+  .trip-notes-page { padding-bottom: 120px; }
+}
