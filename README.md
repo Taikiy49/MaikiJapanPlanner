@@ -1,100 +1,51 @@
-# vinext-starter
+<div align="center">
+  <h1>MaikiJapanPlanner</h1>
+  <p><strong>Next.js travel workspace with itineraries, bookings, notes, budgets, shared state, and optional AI assistance.</strong></p>
+  <p>
+    <img alt="Next.js" src="https://img.shields.io/badge/Next.js-303840?style=flat-square" />
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-303840?style=flat-square" />
+    <img alt="React" src="https://img.shields.io/badge/React-303840?style=flat-square" />
+    <img alt="SQLite" src="https://img.shields.io/badge/SQLite-303840?style=flat-square" />
+  </p>
+  <p><a href="#overview">Overview</a> · <a href="#getting-started">Getting started</a> · <a href="#repository-map">Repository map</a></p>
+</div>
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+---
 
-## Prerequisites
+## Overview
 
-- Node.js `>=22.13.0`
+A personal travel-planning workspace combining itineraries, bookings, notes, and budgeting. The application includes shared-state API routes and optional AI-assisted planning and budget parsing.
 
-## Quick Start
+## What’s inside
 
-```bash
-npm install
+- Trip and traveler organization, itineraries, and bookings.
+- Notes with browser draft recovery.
+- Monthly budget tracking and recorded trends.
+- Server-side shared state and optional AI integrations.
+
+## Getting started
+
+Use a Node.js version satisfying `>=22.13.0` and supporting the `node:sqlite` API used by the state backend. Then:
+
+```sh
+npm ci
 npm run dev
-npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+Build with `npm run build`, run tests with `npm test`, and lint with `npm run lint`. AI routes require `AI_GATEWAY_API_KEY` or the supported Vercel OIDC environment. Review `app/api/state/route.ts` and `db/shared.ts` before choosing local SQLite storage or the optional `EC2_API_ORIGIN` proxy; protect shared-state access with `DB_API_SECRET`.
 
-## Included Shape
+## Repository map
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+| Location | Purpose |
+| --- | --- |
+| [`app/page.tsx`](./app/page.tsx) | Trip workspace |
+| [`app/notes.tsx`](./app/notes.tsx) | Notes and draft recovery |
+| [`app/budget.tsx`](./app/budget.tsx) | Budget interface |
+| [`app/api/`](./app/api/) | Shared state, assistant, and budget parsing routes |
+| [`db/shared.ts`](./db/shared.ts) | SQLite-backed shared state |
+| [`lib/budget.ts`](./lib/budget.ts) | Budget calculations |
+| [`tests/`](./tests/) | Budget and rendered-HTML checks |
 
-## Workspace Auth Headers
+## Project status
 
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
-
-The user ID is stable for the same user on the same Site and different across Sites. Email and name are intended for display or contact purposes.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
-```
-
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+Personal application under development. Repository visibility and deployed-app access are separate. Configure authentication and shared-state protection before using real itineraries or financial information. Optional vinext/Cloudflare starter material remains alongside the current Next.js scripts.
