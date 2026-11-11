@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Budget from "./budget";
 import Notes from "./notes";
+import { itineraryDates } from "@/lib/itinerary";
 import { BudgetData, emptyBudget } from "@/lib/budget";
 import {
   AlertTriangle, ArrowLeft, ArrowRight, BadgeDollarSign, CalendarDays, Columns3, List, CirclePlus, Compass, ExternalLink, Hotel as HotelIcon,
@@ -594,9 +595,10 @@ export default function Home() {
   const flightBookings = chronological(reservations.filter((item) => item.kind === "Flight"));
   const hotelBookings = chronological(reservations.filter((item) => item.kind === "Hotel"));
   const otherBookings = chronological(reservations.filter((item) => item.kind !== "Flight" && item.kind !== "Hotel"));
-  const agendaDates = Array.from(new Set([...visiblePlans.map((item) => item.date), ...visibleReservations.map((item) => item.date)]))
+  const tripDates = itineraryDates([...plans.map((item) => item.date), ...reservations.map((item) => item.date)]);
+  const agendaDates = searchText ? Array.from(new Set([...visiblePlans.map((item) => item.date), ...visibleReservations.map((item) => item.date)]))
     .filter(Boolean)
-    .sort();
+    .sort() : tripDates;
   const todayPlans = plans
     .filter((plan) => plan.date === todayKey)
     .sort((a, b) => minutesFromTime(a.time) - minutesFromTime(b.time));
@@ -1194,7 +1196,7 @@ export default function Home() {
         {tab === "Itinerary" && (
           <div className="page unified-itinerary">
             <section className="agenda-summary">
-              <div><b>{agendaDates.length}</b><span>days</span></div>
+              <div><b>{tripDates.length}</b><span>days</span></div>
               <div><b>{plans.length}</b><span>plans</span></div>
               <div><b>{reservations.filter((item) => item.kind === "Flight").length}</b><span>flights</span></div>
               <div><b>{reservations.filter((item) => item.kind === "Hotel").length}</b><span>hotels</span></div>
@@ -1222,9 +1224,10 @@ export default function Home() {
                     <div><b>{new Date(date + "T12:00").getDate()}</b><span>{new Date(date + "T12:00").toLocaleString("en", { month: "short" })}</span></div>
                     <p><strong>{new Date(date + "T12:00").toLocaleString("en", { weekday: "long" })}</strong><small>{new Date(date + "T12:00").toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" })}</small></p>
                     {date === todayKey && <em>TODAY</em>}
-                    <button onClick={() => openPlanModal(date)}><CirclePlus size={15} /> Add</button>
+                    <button aria-label={`Add itinerary item on ${date}`} onClick={() => openPlanModal(date)}><CirclePlus size={15} /> Add</button>
                   </header>
                   <div className="unified-day-items">
+                    {!items.length && <p className="itinerary-open-day">No plans yet. This day is open.</p>}
                     {items.map((entry) => entry.source === "plan" ? (
                       <article className="agenda-item activity" key={`plan-${entry.item.id}`}>
                         <div className="agenda-time"><b>{entry.item.hoursPending ? "Hours pending" : friendlyTime(entry.item.time)}</b>{entry.item.endTime && <small>until {friendlyTime(entry.item.endTime)}{entry.item.time && minutesFromTime(entry.item.endTime) <= minutesFromTime(entry.item.time) ? " (+1 day)" : ""}</small>}</div>

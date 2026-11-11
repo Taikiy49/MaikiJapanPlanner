@@ -72,3 +72,5 @@ Itinerary offers List and Horizontal views of the same day sections. Horizontal 
 Itinerary refinements use flat compact summary counts, plain blue dates, 8px corners, 10px event padding, and sentence-case text categories. Activities support optional closing times and an explicit hours-pending state; notes preserve room details and timing caveats. Never invent unpublished operating hours.
 
 Shared compact density applies across Overview, Itinerary, Expenses, Packing, Notes, Audit Log, Mia Budget, and dialogs: 12px section gaps, 14px desktop/12px mobile panel padding, 8px corners, 17px panel headings, and 8–10px row padding. Summaries use quiet white surfaces; avoid oversized empty states. Notes remains resizable with a 220px minimum. Keep mobile form text at 16px and coarse-pointer controls usable.
+
+Both itinerary views retain every calendar date from the first through last scheduled plan or reservation, including open days with a date-specific Add action. Search filters to matching dates without changing the full trip day count.

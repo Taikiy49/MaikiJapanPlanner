@@ -527,3 +527,5 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
   .shell .packing-overview .pack-status h2 { font-size: 22px; }
   .shell .packing-overview .pack-status .pack-add { padding: 8px; }
 }
+
+.itinerary-open-day { margin: 0; padding: 14px 0; color: #53657b; font-size: 13px; line-height: 1.5; }
