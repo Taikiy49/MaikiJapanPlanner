@@ -3,7 +3,7 @@ import "./globals.css";
 import "./refinement.css";
 
 export const metadata: Metadata = {
-  title: "Miaki Planner — Group Trip Planner",
+  title: "Miaki",
   description: "A cheerful place to plan any trip, split expenses, and settle up with friends.",
   icons: { icon: "/favicon.svg" },
 };

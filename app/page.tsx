@@ -966,7 +966,7 @@ export default function Home() {
         <div className="brand">
           <i aria-label="Airplane"><Plane size={21} strokeWidth={2.2} /></i>
           <div>
-              <b>Miaki<br />Planner</b>
+              <b>Miaki</b>
             <small>group trip planner</small>
           </div>
         </div>
@@ -1006,7 +1006,7 @@ export default function Home() {
       <section className="workspace">
         <header>
           <button className="sidebar-toggle" aria-label={sidebarOpen ? "Hide sidebar" : "Show sidebar"} title={sidebarOpen ? "Hide sidebar" : "Show sidebar"} aria-expanded={sidebarOpen} aria-controls="planner-sidebar" onClick={() => setSidebarOpen((open) => !open)}><PanelLeft size={20} aria-hidden="true"/></button>
-          <b className="mobile-logo"><Plane size={19} /> Miaki Planner</b>
+          <b className="mobile-logo"><Plane size={19} /> Miaki</b>
           <label className="mobile-trip-picker">
             <span>Trip</span>
             <select aria-label="Current trip" value={activeTripId} onChange={(event) => switchTrip(event.target.value)}>
