@@ -1063,28 +1063,6 @@ export default function Home() {
         </div>}
         {tab === "Overview" && (
           <div className="page">
-            <section className="hero">
-              <div className="hero-copy">
-                <textarea
-                  className="trip-name"
-                  aria-label="Trip name"
-                  rows={1}
-                  value={tripName}
-                  onChange={(e) => setTripName(e.target.value)}
-                />
-                <div>
-                  <button
-                    className="primary"
-                    onClick={() => setTab("Itinerary")}
-                  >
-                    Open itinerary →
-                  </button>
-                  <span>{people.length} people</span>
-                  <span>{plans.length + reservations.length} itinerary items</span>
-                  <span>{expenses.length} expenses</span>
-                </div>
-              </div>
-            </section>
             <section className="stats">
               <Stat
                 icon={<Sparkles size={18} />}
