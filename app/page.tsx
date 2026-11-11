@@ -297,7 +297,7 @@ export default function Home() {
     [auditLog, setAuditLog] = useState<AuditEntry[]>([]),
     [budget, setBudget] = useState<BudgetData>(emptyBudget),
     [query, setQuery] = useState(""),
-    [modal, setModal] = useState<"plan" | "expense" | "person" | "reservation" | "assistant" | "link" | "packing" | "trip" | null>(null),
+    [modal, setModal] = useState<"plan" | "expense" | "person" | "reservation" | "assistant" | "link" | "packing" | "trip" | "rename-trip" | null>(null),
     [toast, setToast] = useState(""),
     [aiQuestion, setAiQuestion] = useState(""),
     [aiAnswer, setAiAnswer] = useState(""),
@@ -677,6 +677,7 @@ export default function Home() {
         assistant: ["SMART TRIP CHECK", "Ask Miaki", "Get a trip-aware review of plans, bookings, and loose ends."],
         link: editing?.type === "link" ? ["KEEP IT CURRENT", "Edit useful link", "Update its label or destination."] : ["SAVE FOR LATER", "Add a useful link", "Keep tickets, maps, menus, and documents easy to find."],
         packing: editing?.type === "packing" ? ["UPDATE THE LIST", "Edit packing item", "Change the item or who is bringing it."] : ["PACK WITH PURPOSE", "Add a packing item", "One less thing to forget before you leave."],
+        "rename-trip": ["", "Rename trip", ""],
         trip: ["YOUR TRIP COLLECTION", "Create a new trip", "Every trip gets its own plans, people, expenses, and details."],
       }[modal]
     : null;
@@ -1057,7 +1058,7 @@ export default function Home() {
             <summary aria-label="Select trip">{tripName}</summary>
             <div className="trip-menu-panel" onClick={(event) => { if ((event.target as HTMLElement).closest("button")) event.currentTarget.closest("details")?.removeAttribute("open"); }}>
               {trips.map((trip) => <button key={trip.id} className={trip.id === activeTripId ? "selected" : ""} aria-current={trip.id === activeTripId ? "true" : undefined} onClick={() => switchTrip(trip.id)}><span>{trip.id === activeTripId ? tripName : trip.tripName}</span>{trip.id === activeTripId && <Check size={16}/>}</button>)}
-              <div className="trip-menu-actions"><button onClick={() => setModal("trip")}><CirclePlus size={17}/> Create trip</button>{trips.length > 1 && <button onClick={requestRemoveCurrentTrip}><Trash2 size={17}/> Delete current trip</button>}</div>
+              <div className="trip-menu-actions"><button onClick={() => setModal("rename-trip")}><Pencil size={17}/> Rename current trip</button><button onClick={() => setModal("trip")}><CirclePlus size={17}/> Create trip</button>{trips.length > 1 && <button onClick={requestRemoveCurrentTrip}><Trash2 size={17}/> Delete current trip</button>}</div>
             </div>
           </details>
         </div>}
@@ -1647,6 +1648,22 @@ export default function Home() {
                 <Field name="location" label="Location" placeholder="Address, airport, or venue" />
                 <Field name="confirmation" label="Confirmation number (optional)" required={false} placeholder="Booking reference" />
                 <button className="primary">Save booking</button>
+              </form>
+            ) : modal === "rename-trip" ? (
+              <form onSubmit={(event) => {
+                event.preventDefault();
+                const input = event.currentTarget.elements.namedItem("name") as HTMLInputElement;
+                const name = input.value.trim();
+                if (!name) { input.setCustomValidity("Enter a trip name."); input.reportValidity(); return; }
+                if (name !== tripName) {
+                  logActivity("Trip", "Renamed", `${tripName} → ${name}`);
+                  setTripName(name);
+                }
+                setModal(null);
+                setToast("Trip renamed");
+              }}>
+                <label>Trip name<input name="name" required maxLength={120} defaultValue={tripName} onInput={(event) => event.currentTarget.setCustomValidity("")} /></label>
+                <button className="primary">Save name</button>
               </form>
             ) : modal === "trip" ? (
               <form onSubmit={addTrip}>
