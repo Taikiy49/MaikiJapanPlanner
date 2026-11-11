@@ -398,3 +398,19 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
 @media (pointer: coarse) {
   .shell .unified-itinerary .unified-day > header > button { min-width: 44px; min-height: 44px; }
 }
+
+/* Explicit sidebar visibility replaces hover expansion. */
+.shell .workspace > header > .sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 38px; width: 38px; height: 38px; padding: 0; border: 1px solid var(--line); border-radius: 8px; color: #245d8b; background: #fff; cursor: pointer; }
+.shell .workspace > header > .sidebar-toggle:hover { background: #eaf3fb; }
+.shell .workspace > header > .sidebar-toggle:focus-visible { outline: 2px solid #438bc2; outline-offset: 3px; }
+.shell.budget-workspace .workspace > header > .sidebar-toggle { margin-right: auto; }
+@media (min-width: 901px) {
+  .shell.sidebar-open > aside { width: 190px; transition: none; }
+  .shell.sidebar-open .workspace { margin-left: 190px; }
+  .shell.sidebar-open aside .brand > div, .shell.sidebar-open aside nav .sidebar-label { opacity: 1; transition: none; }
+  .shell.sidebar-closed > aside { display: none; }
+  .shell.sidebar-closed .workspace { margin-left: 0; }
+}
+@media (max-width: 900px) {
+  .shell .workspace > header > .sidebar-toggle { display: none; }
+}

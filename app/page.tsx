@@ -5,7 +5,7 @@ import Notes from "./notes";
 import { BudgetData, emptyBudget } from "@/lib/budget";
 import {
   AlertTriangle, ArrowLeft, ArrowRight, BadgeDollarSign, CalendarDays, Columns3, List, CirclePlus, Compass, ExternalLink, Hotel as HotelIcon,
-  Car, Check, NotebookPen, ClipboardList, DollarSign, Download, Luggage, Pencil, Plane, Printer, Redo2, Search, ShoppingBag,
+  Car, Check, NotebookPen, PanelLeft, ClipboardList, DollarSign, Download, Luggage, Pencil, Plane, Printer, Redo2, Search, ShoppingBag,
   Sparkles, Tickets, TrainFront, Trash2, Undo2, UserRound, Users, Utensils, WalletCards, WandSparkles, X,
 } from "lucide-react";
 
@@ -305,6 +305,7 @@ export default function Home() {
     [now, setNow] = useState<Date | null>(null),
     [ready, setReady] = useState(false),
     [syncStatus, setSyncStatus] = useState("Connecting…"),
+    [sidebarOpen, setSidebarOpen] = useState(true),
     [itineraryLayout, setItineraryLayout] = useState<"list" | "horizontal">("list"),
     [calendarView, setCalendarView] = useState<CalendarView>("month"),
     [calendarDate, setCalendarDate] = useState(() => zonedDateKey(new Date(), "Pacific/Honolulu")),
@@ -957,8 +958,8 @@ export default function Home() {
     setToast("Trip backup downloaded");
   }
   return (
-    <main className={`shell${tab === "Mia Budget" ? " budget-workspace" : ""}`}>
-      <aside>
+    <main className={`shell ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}${tab === "Mia Budget" ? " budget-workspace" : ""}`}>
+      <aside id="planner-sidebar">
         <div className="brand">
           <i aria-label="Airplane"><Plane size={21} strokeWidth={2.2} /></i>
           <div>
@@ -1001,6 +1002,7 @@ export default function Home() {
       </aside>
       <section className="workspace">
         <header>
+          <button className="sidebar-toggle" aria-label={sidebarOpen ? "Hide sidebar" : "Show sidebar"} title={sidebarOpen ? "Hide sidebar" : "Show sidebar"} aria-expanded={sidebarOpen} aria-controls="planner-sidebar" onClick={() => setSidebarOpen((open) => !open)}><PanelLeft size={20} aria-hidden="true"/></button>
           <b className="mobile-logo"><Plane size={19} /> Miaki Planner</b>
           <label className="mobile-trip-picker">
             <span>Trip</span>

@@ -61,7 +61,7 @@ Forms use visible labels, native semantic controls, explicit status feedback, an
 Do keep data scannable, use Lucide SVG icons, and preserve mobile reachability. Do not use emoji icons, black sidebars, oversized empty padding, or decorative gradients unrelated to hierarchy.
 
 Budget uses one compact paycheck-and-totals strip, 36px commitment fields, and short empty states. Keep the page identity in navigation instead of repeating it inside the budget. Use “Savings” consistently in summary and chart labels. Narrow screens wrap rows while retaining readable input text and natural document scrolling.
-Desktop pointer navigation rests as a 72px icon rail and expands to 190px on hover or keyboard-visible focus, overlaying the workspace without reflow. Touch navigation retains visible labels. Respect reduced motion and retain accessible names while labels are visually hidden.
+Desktop navigation uses an explicit Show/Hide sidebar button in the workspace header. Open displays a 190px labeled sidebar; closed removes it and returns the space to the workspace. Hover does not change visibility. Mobile retains bottom navigation. The toggle remains available on every desktop page, including Mia Budget.
 
 Notes uses the existing per-trip tripNotes field and shared autosave. Edits in the Notes editor also keep a browser-only draft, offered for explicit recovery when it differs; never silently overwrite shared notes. Mobile navigation scrolls horizontally to keep all seven destinations reachable.
 
