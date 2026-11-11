@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { CalendarPlus, CirclePlus, DollarSign, LineChart, PiggyBank, ReceiptText, Trash2, WalletCards } from "lucide-react";
+import { CalendarPlus, ChevronDown, CirclePlus, DollarSign, LineChart, PiggyBank, ReceiptText, Trash2, WalletCards } from "lucide-react";
 import { BudgetData, BudgetItem, budgetTotals, recordBudgetMonth } from "@/lib/budget";
 
 const money = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value || 0);
@@ -30,19 +30,38 @@ export default function Budget({ value, onChange }: { value: BudgetData; onChang
           <Recurring checked={item.recurring} onChange={(recurring) => updateItem(item.id, { recurring })}/>
           <button className="icon-button" aria-label={`Remove ${item.name}`} onClick={() => onChange({ ...value, items: value.items.filter((entry) => entry.id !== item.id) })}><Trash2 size={15}/></button>
         </div>)}</div>
-        <footer><label>Month<input aria-label="Budget month" type="month" value={month} onChange={(e) => setMonth(e.target.value)}/></label><button className="primary" onClick={record}><CalendarPlus size={16}/> Record month</button></footer>
+        <footer><label>Month<input aria-label="Budget month" type="month" value={month} onChange={(e) => setMonth(e.target.value)}/></label><button className="primary" disabled={!month} onClick={record}><CalendarPlus size={16}/> Record month</button></footer>
         {message && <div className="budget-message" role="status">{message}</div>}
       </div>
 
     </section>
 
-    <section className="card budget-history"><header><h2>Monthly trends</h2><LineChart size={20}/></header>{value.months.length ? <BudgetChart months={value.months}/> : <div className="budget-empty"><LineChart size={28}/><p>Record a month to see your trends.</p></div>}</section>
+    <section className="card budget-history"><header><h2>Monthly history</h2><LineChart size={20}/></header>{value.months.length ? <BudgetHistory months={value.months}/> : <div className="budget-empty"><LineChart size={28}/><p>Record a month to save your paycheck and commitment details.</p></div>}</section>
   </div>;
 }
 
 function Recurring({ checked, onChange }: { checked: boolean; onChange: (value: boolean) => void }) { return <label className="recurring"><input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)}/><span>Recurring</span></label>; }
 function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) { return <div><i>{icon}</i><span><small>{label}</small><b>{value}</b></span></div>; }
-function BudgetChart({ months }: { months: BudgetData["months"] }) {
-  const max = Math.max(1, ...months.flatMap((item) => [item.bills, item.saved, Math.max(0, item.remaining)]));
-  return <div className="budget-chart"><div className="chart-legend"><span className="bills">Bills</span><span className="saved">Savings</span><span className="remaining">Remaining</span></div><div className="chart-bars">{months.map((item) => <div className="chart-month" key={item.month}><div className="bar-stack"><i className="remaining" style={{ height: `${Math.max(3, Math.max(0,item.remaining)/max*100)}%` }} title={`Remaining ${money(item.remaining)}`}/><i className="saved" style={{ height: `${Math.max(3,item.saved/max*100)}%` }} title={`Savings ${money(item.saved)}`}/><i className="bills" style={{ height: `${Math.max(3,item.bills/max*100)}%` }} title={`Bills ${money(item.bills)}`}/></div><b>{new Date(`${item.month}-02`).toLocaleDateString("en-US", { month: "short" })}</b><small>{money(item.remaining)} left</small></div>)}</div></div>;
+function BudgetHistory({ months }: { months: BudgetData["months"] }) {
+  return <div className="budget-months">{[...months].sort((a, b) => b.month.localeCompare(a.month)).map((entry) => {
+    const label = new Date(`${entry.month}-02T12:00:00`).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    return <details className="budget-month" key={entry.month}>
+      <summary>
+        <span className="budget-month-heading"><ChevronDown size={16} aria-hidden="true"/><strong>{label}</strong></span>
+        <span><small>Paycheck</small><b>{money(entry.paycheck)}</b></span>
+        <span><small>Bills</small><b>{money(entry.bills)}</b></span>
+        <span><small>Savings</small><b>{money(entry.saved)}</b></span>
+        <span className={entry.remaining < 0 ? "negative" : ""}><small>Remaining</small><b>{money(entry.remaining)}</b></span>
+      </summary>
+      <div className="budget-month-details">
+        <dl className="budget-entry-list">
+          <div><dt>Paycheck{entry.paycheckRecurring !== undefined && <small>{entry.paycheckRecurring ? "Recurring" : "One-time"}</small>}</dt><dd>{money(entry.paycheck)}</dd></div>
+          {entry.items?.map((item, index) => <div key={`${item.id}-${index}`}><dt>{item.name || "Unnamed commitment"}<small>{item.kind === "saving" ? "Savings" : "Bill"} · {item.recurring ? "Recurring" : "One-time"}</small></dt><dd>{money(item.amount)}</dd></div>)}
+          <div className="budget-entry-total"><dt>Total committed</dt><dd>{money(entry.bills + entry.saved)}</dd></div>
+        </dl>
+        {entry.items === undefined && <p className="budget-history-note">Only totals were saved for this month. Individual commitment details are available for months recorded from now on.</p>}
+        {entry.items?.length === 0 && <p className="budget-history-note">No commitments recorded for this month.</p>}
+      </div>
+    </details>;
+  })}</div>;
 }

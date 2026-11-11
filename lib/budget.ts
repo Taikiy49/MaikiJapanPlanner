@@ -1,5 +1,5 @@
 export type BudgetItem = { id: string; name: string; amount: number; recurring: boolean; kind: "bill" | "saving" };
-export type BudgetMonth = { month: string; paycheck: number; bills: number; saved: number; remaining: number };
+export type BudgetMonth = { month: string; paycheck: number; bills: number; saved: number; remaining: number; items?: BudgetItem[]; paycheckRecurring?: boolean };
 export type BudgetData = { paycheck: number; paycheckRecurring: boolean; items: BudgetItem[]; months: BudgetMonth[] };
 
 export const emptyBudget = (): BudgetData => ({
@@ -21,11 +21,11 @@ export function budgetTotals(data: BudgetData) {
 
 export function recordBudgetMonth(data: BudgetData, month: string): BudgetData {
   const totals = budgetTotals(data);
-  const snapshot = { month, paycheck: data.paycheck, bills: totals.bills, saved: totals.saved, remaining: totals.remaining };
+  const snapshot = { month, items: data.items.map((item) => ({ ...item })), paycheckRecurring: data.paycheckRecurring, paycheck: data.paycheck, bills: totals.bills, saved: totals.saved, remaining: totals.remaining };
   return {
     paycheck: data.paycheckRecurring ? data.paycheck : 0,
     paycheckRecurring: data.paycheckRecurring,
     items: data.items.map((item) => item.recurring ? item : { ...item, amount: 0 }),
-    months: [...data.months.filter((item) => item.month !== month), snapshot].sort((a, b) => a.month.localeCompare(b.month)).slice(-12),
+    months: [...data.months.filter((item) => item.month !== month), snapshot].sort((a, b) => a.month.localeCompare(b.month)),
   };
 }

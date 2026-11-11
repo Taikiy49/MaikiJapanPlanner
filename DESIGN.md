@@ -64,3 +64,5 @@ Budget uses one compact paycheck-and-totals strip, 36px commitment fields, and s
 Desktop pointer navigation rests as a 72px icon rail and expands to 190px on hover or keyboard-visible focus, overlaying the workspace without reflow. Touch navigation retains visible labels. Respect reduced motion and retain accessible names while labels are visually hidden.
 
 Notes uses the existing per-trip tripNotes field and shared autosave. Edits in the Notes editor also keep a browser-only draft, offered for explicit recovery when it differs; never silently overwrite shared notes. Mobile navigation scrolls horizontally to keep all seven destinations reachable.
+
+Monthly budget history uses native expandable rows, newest first, with paycheck, bills, savings, and remaining visible. Expanded rows show immutable recorded commitment amounts and recurrence. Legacy totals stay readable without inventing missing item details. Keep all recorded months.

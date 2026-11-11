@@ -302,3 +302,28 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
   .trip-notes-editor { padding: 16px; }
   .trip-notes-page { padding-bottom: 120px; }
 }
+
+/* Monthly snapshots share the compact budget ledger's typography. */
+.budget-month + .budget-month { border-top: 1px solid var(--line); }
+.budget-month > summary { display: grid; grid-template-columns: minmax(170px, 1.4fr) repeat(4, minmax(0, 1fr)); gap: 12px; padding: 14px 6px; cursor: pointer; list-style: none; border-radius: 6px; }
+.budget-month > summary::-webkit-details-marker { display: none; }
+.budget-month > summary:hover { background: #f4f7fb; }
+.budget-month > summary:focus-visible { outline: 2px solid #438bc2; outline-offset: 2px; }
+.budget-month-heading { display: flex; align-items: center; gap: 8px; }
+.budget-month-heading svg { flex-shrink: 0; transform: rotate(-90deg); }
+.budget-month[open] .budget-month-heading svg { transform: rotate(0); }
+.budget-month summary small { display: block; color: #53657b; font-size: 12px; margin-bottom: 4px; }
+.budget-month summary b, .budget-entry-list dd { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.budget-month summary .negative { color: #ad2945; }
+.budget-month-details { padding: 0 6px 14px; }
+.budget-entry-list { margin: 0; }
+.budget-entry-list > div { display: flex; justify-content: space-between; gap: 20px; padding: 10px 0; border-top: 1px solid var(--line); }
+.budget-entry-list dt { min-width: 0; overflow-wrap: anywhere; }
+.budget-entry-list dt small { display: block; color: #53657b; font-size: 12px; margin-top: 3px; }
+.budget-entry-list dd { margin: 0; text-align: right; flex-shrink: 0; }
+.budget-entry-total { font-weight: 650; }
+.budget-history-note { color: #53657b; font-size: 13px; line-height: 1.5; margin: 10px 0 0; }
+@media (max-width: 650px) {
+  .budget-month > summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
+  .budget-month-heading { grid-column: 1 / -1; }
+}
