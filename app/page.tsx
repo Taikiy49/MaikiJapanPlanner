@@ -4,7 +4,7 @@ import Budget from "./budget";
 import Notes from "./notes";
 import { BudgetData, emptyBudget } from "@/lib/budget";
 import {
-  AlertTriangle, BadgeDollarSign, CalendarDays, CirclePlus, Compass, ExternalLink, Hotel as HotelIcon,
+  AlertTriangle, ArrowLeft, ArrowRight, BadgeDollarSign, CalendarDays, Columns3, List, CirclePlus, Compass, ExternalLink, Hotel as HotelIcon,
   Car, Check, NotebookPen, ClipboardList, DollarSign, Download, Luggage, Pencil, Plane, Printer, Redo2, Search, ShoppingBag,
   Sparkles, Tickets, TrainFront, Trash2, Undo2, UserRound, Users, Utensils, WalletCards, WandSparkles, X,
 } from "lucide-react";
@@ -301,6 +301,7 @@ export default function Home() {
     [now, setNow] = useState<Date | null>(null),
     [ready, setReady] = useState(false),
     [syncStatus, setSyncStatus] = useState("Connecting…"),
+    [itineraryLayout, setItineraryLayout] = useState<"list" | "horizontal">("list"),
     [calendarView, setCalendarView] = useState<CalendarView>("month"),
     [calendarDate, setCalendarDate] = useState(() => zonedDateKey(new Date(), "Pacific/Honolulu")),
     [planDefaultDate, setPlanDefaultDate] = useState(""),
@@ -310,6 +311,7 @@ export default function Home() {
     [historyStatus, setHistoryStatus] = useState({ undo: false, redo: false }),
     [editing, setEditing] = useState<EditTarget | null>(null),
     [confirming, setConfirming] = useState<ConfirmAction | null>(null);
+  const itineraryBoard = useRef<HTMLDivElement>(null);
   const remoteUpdatedAt = useRef(0);
   const saveQueue = useRef<Promise<void>>(Promise.resolve());
   const lastSavedJson = useRef("");
@@ -1188,7 +1190,18 @@ export default function Home() {
               <div><b>{reservations.filter((item) => item.kind === "Hotel").length}</b><span>hotels</span></div>
               <button onClick={() => openPlanModal()}><CirclePlus size={16} /> Add itinerary item</button>
             </section>
-            <div className="unified-days">
+            <div className="itinerary-view-toolbar">
+              <div className="itinerary-view-switch" role="group" aria-label="Itinerary view">
+                <button aria-pressed={itineraryLayout === "list"} onClick={() => setItineraryLayout("list")}><List size={16} aria-hidden="true"/> List</button>
+                <button aria-pressed={itineraryLayout === "horizontal"} onClick={() => setItineraryLayout("horizontal")}><Columns3 size={16} aria-hidden="true"/> Horizontal</button>
+              </div>
+              {itineraryLayout === "horizontal" && agendaDates.length > 0 && <div className="itinerary-board-controls">
+                <span>Days run left to right</span>
+                <button aria-label="Scroll to earlier days" onClick={() => itineraryBoard.current?.scrollBy({ left: -340, behavior: "instant" })}><ArrowLeft size={18} aria-hidden="true"/></button>
+                <button aria-label="Scroll to later days" onClick={() => itineraryBoard.current?.scrollBy({ left: 340, behavior: "instant" })}><ArrowRight size={18} aria-hidden="true"/></button>
+              </div>}
+            </div>
+            <div ref={itineraryBoard} className={`unified-days ${itineraryLayout === "horizontal" && agendaDates.length ? "itinerary-board" : ""}`} role={itineraryLayout === "horizontal" ? "region" : undefined} aria-label={itineraryLayout === "horizontal" ? "Itinerary days, scroll horizontally" : undefined} tabIndex={itineraryLayout === "horizontal" && agendaDates.length ? 0 : undefined}>
               {agendaDates.length ? agendaDates.map((date) => {
                 const items = [
                   ...visiblePlans.filter((item) => item.date === date).map((item) => ({ source: "plan" as const, time: item.time, item })),

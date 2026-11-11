@@ -66,3 +66,5 @@ Desktop pointer navigation rests as a 72px icon rail and expands to 190px on hov
 Notes uses the existing per-trip tripNotes field and shared autosave. Edits in the Notes editor also keep a browser-only draft, offered for explicit recovery when it differs; never silently overwrite shared notes. Mobile navigation scrolls horizontally to keep all seven destinations reachable.
 
 Monthly budget history uses native expandable rows, newest first, with paycheck, bills, savings, and remaining visible. Expanded rows show immutable recorded commitment amounts and recurrence. Legacy totals stay readable without inventing missing item details. Keep all recorded months.
+
+Itinerary offers List and Horizontal views of the same day sections. Horizontal lays dates left to right in a locally scrolling region with keyboard focus and explicit earlier/later scroll buttons; edits, search, and completion remain shared. Print expands all days.
