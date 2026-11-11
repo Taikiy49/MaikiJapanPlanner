@@ -414,3 +414,116 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
 @media (max-width: 900px) {
   .shell .workspace > header > .sidebar-toggle { display: none; }
 }
+
+/* Shared compact density across every planner page. */
+.shell { --section-gap: 12px; --panel-padding: 14px; }
+.shell .page { padding-top: 12px; }
+.shell .card { padding: var(--panel-padding); border-radius: 8px; }
+.shell .title { margin: 0 0 12px; gap: 10px; }
+.shell .title h2, .shell .card h2, .shell .overview-center-head h2 { font-family: inherit; font-size: 17px; font-weight: 600; letter-spacing: -.02em; line-height: 1.4; }
+.shell .title p { margin: 4px 0 0; font-size: 13px; }
+.shell .empty { padding: 14px 4px; min-height: 0; font-size: 13px; line-height: 1.5; }
+.shell .hero { border-radius: 8px; }
+.shell .hero .hero-copy { padding: 14px 16px; gap: 10px; }
+.shell .hero .trip-name { font-size: clamp(22px, 2.6vw, 30px); }
+.shell .stats { margin-top: 12px; border-radius: 8px; }
+.shell .stats article { min-height: 58px; padding: 8px 12px; }
+.shell .stats article b { font-size: 22px; margin-top: 2px; }
+.shell .stats article small { letter-spacing: 0; font-weight: 500; }
+.shell .overview-center { padding: 14px; margin: 12px 0; gap: 0 16px; border-radius: 8px; }
+.shell .overview-center-head { gap: 10px; margin-bottom: 10px; }
+.shell .overview-jumps { gap: 6px; }
+.shell .overview-jumps button { padding: 7px 10px; }
+.shell .overview-timeline .overview-preview-row, .shell .overview-preview-row { padding-block: 9px; }
+.shell .overview-preview-row b .event-tag { padding: 0; margin-right: 7px; background: transparent; border: 0; text-transform: none; letter-spacing: 0; font-size: 11px; }
+.shell .travel-essentials { margin-top: 10px; padding-left: 16px; }
+.shell .essential-grid { gap: 8px; }
+.shell .essential-card { border-radius: 6px; background: transparent; }
+.shell .essential-card > header { padding: 8px 10px; }
+.shell .essential-card > div button { padding: 8px 10px; }
+.shell .essential-empty { padding: 10px; margin: 0; }
+.shell .money-stats, .shell .packing-overview { margin: 0 0 12px; gap: 12px; }
+.shell .money-stats > div, .shell .packing-overview .pack-status, .shell .audit-summary { min-height: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); box-shadow: none; }
+.shell .money-stats > div b, .shell .packing-overview .pack-status h2 { color: var(--ink); font-size: 26px; line-height: 1.3; margin: 3px 0; }
+.shell .money-stats > div small, .shell .money-stats > div span, .shell .packing-overview .pack-status > i { color: #53657b; }
+.shell .money-stats > div button, .shell .packing-overview .pack-status .pack-add { color: #245d8b; background: #eef4fa; border-color: var(--line); border-radius: 7px; box-shadow: none; }
+.shell .expense-layout { margin-top: 12px; gap: 12px; }
+.shell .expense-layout > div { gap: 12px; }
+.shell .expense { min-height: 52px; padding: 8px 0; gap: 8px; }
+.shell .expense > div { min-width: 0; }
+.shell .expense b { font-size: 14px; overflow-wrap: anywhere; }
+.shell .expense small, .shell .expense-note { font-size: 12px; }
+.shell .balance, .shell .settlement { padding: 8px 0; }
+.shell .traveler-packing-grid { margin-top: 12px; gap: 12px; }
+.shell .traveler-pack-card > header { gap: 9px; margin-bottom: 10px; }
+.shell .traveler-pack-card h3 { margin: 0; font-size: 15px; }
+.shell .traveler-pack-card > header span { font-size: 12px; }
+.shell .pack-list { margin-top: 8px; }
+.shell .pack-list label { padding: 8px 0; min-height: 40px; gap: 8px; }
+.shell .pack-list label > span { font-size: 14px; min-width: 0; overflow-wrap: anywhere; }
+.shell .pack-list label > small { font-size: 11px; }
+.shell .trip-notes-editor > label { font-size: 16px; font-weight: 600; }
+.shell .trip-notes-editor > p { margin: 5px 0 10px; font-size: 13px; }
+.shell .trip-notes-editor textarea { min-height: 220px; margin-top: 10px; padding: 12px; border-radius: 6px; resize: vertical; font-size: 16px; line-height: 1.5; }
+.shell .notes-save-status { min-height: 0; margin-top: 8px; font-size: 12px; }
+.shell .notes-recovery { padding: 6px 0; }
+.shell .notes-recovery p { margin: 4px 0 8px; font-size: 13px; }
+.shell .audit-summary { margin-bottom: 12px; }
+.shell .audit-summary b, .shell .audit-summary small, .shell .audit-summary svg { color: var(--ink); }
+.shell .audit-summary b { font-size: 24px; }
+.shell .audit-summary small { font-size: 12px; font-weight: 500; letter-spacing: 0; }
+.shell .audit-head { padding-bottom: 10px; margin-bottom: 0; }
+.shell .audit-head > div > small { display: none; }
+.shell .audit-head h2 { margin: 0; }
+.shell .audit-entry { padding: 10px 0; gap: 10px; }
+.shell .audit-entry h3 { font-size: 14px; margin: 4px 0; overflow-wrap: anywhere; }
+.shell .audit-entry p { margin: 0; font-size: 12px; }
+.shell .audit-entry em { background: transparent; border: 0; padding: 0; border-radius: 0; font-size: 11px; text-transform: none; }
+.shell .audit-empty { padding: 20px 8px; min-height: 0; }
+.shell .budget-ledger { border-radius: 8px; padding: 12px; }
+.shell .budget-month > summary { padding-block: 10px; }
+.shell .budget-entry-list > div { padding-block: 8px; }
+.modal { padding: 20px; border-radius: 10px; }
+.modal > small { display: none; }
+.modal h2 { margin-top: 0; font-size: 22px; }
+.modal > p { margin: 5px 0 14px; font-size: 13px; }
+.modal form { gap: 12px; }
+.modal label { font-size: 12px; }
+.modal input, .modal select, .modal textarea { min-height: 38px; padding: 8px 10px; font-size: 16px; }
+.modal .formrow { gap: 12px; }
+@media (max-width: 1100px) {
+  .shell .travel-essentials { padding: 12px 0 0; }
+}
+@media (max-width: 650px) {
+  .shell .page { padding-inline: 12px; padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+  .shell .card, .shell .overview-center { padding: 12px; }
+  .shell .stats article { padding: 8px; }
+  .shell .stats article b { font-size: 20px; }
+  .shell .hero .hero-copy { padding: 12px; }
+  .shell .trip-notes-editor textarea { min-height: 220px; }
+  .shell .expense { column-gap: 6px; }
+  .modal { padding: 18px 14px; }
+}
+@media (pointer: coarse) {
+  .shell .pack-list label { min-height: 44px; }
+  .modal input:not([type="checkbox"]), .modal select { min-height: 44px; }
+}
+.shell .packing-overview .pack-status { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px 12px; align-items: center; }
+.shell .packing-overview .pack-status h2 { grid-column: 1; grid-row: 1; }
+.shell .packing-overview .pack-status .pack-add { grid-column: 2; grid-row: 1; margin: 0; }
+.shell .packing-overview .pack-status .progress { grid-column: 1 / -1; grid-row: 2; background: #e6edf4; }
+.shell .traveler-pack-card > header { padding-bottom: 8px; }
+.shell .traveler-pack-card .pack-list { padding: 0; }
+.shell .traveler-pack-card .pack-list label { margin: 0; border-radius: 0; border: 0; border-bottom: 1px solid var(--line); }
+.shell .traveler-pack-card .pack-list small { background: transparent; padding: 0; text-transform: none; letter-spacing: 0; }
+.shell .traveler-pack-card .empty { padding: 12px 0; gap: 8px; }
+.shell .audit-head { padding: 0 0 10px; }
+.shell .audit-list { padding: 0; }
+.shell .audit-entry { min-height: 0; }
+.shell .audit-icon { background: transparent; border-radius: 0; }
+.shell .expense { border-radius: 0; }
+.shell .expense-note { padding: 0; background: transparent; }
+@media (max-width: 400px) {
+  .shell .packing-overview .pack-status h2 { font-size: 22px; }
+  .shell .packing-overview .pack-status .pack-add { padding: 8px; }
+}

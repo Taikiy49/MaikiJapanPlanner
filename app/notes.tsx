@@ -43,9 +43,9 @@ export default function Notes({ tripId, value, onChange, syncStatus }: {
         <p>A browser draft differs from these notes. Restoring it replaces the editor text.</p>
         <button className="soft" onClick={() => update(draft)}>Restore browser draft</button>
       </div>}
-      <textarea id="trip-notes-editor" name="tripNotes" className="resize-none" value={value}
+      <textarea id="trip-notes-editor" name="tripNotes" value={value}
         onChange={(event) => update(event.target.value)} aria-describedby="trip-notes-help trip-notes-status"
-        placeholder="Las Vegas airport 8 AM → Anaheim Marriott hotel Hertz 2:30 PM…" rows={14} />
+        placeholder="Las Vegas airport 8 AM → Anaheim Marriott hotel Hertz 2:30 PM…" rows={9} />
       <div id="trip-notes-status" className="notes-save-status" role="status">
         {sharedUnavailable ? "Shared saving unavailable. " : `${syncStatus}. `}{localStatus}
       </div>
