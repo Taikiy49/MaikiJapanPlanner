@@ -364,3 +364,37 @@ html { scrollbar-color: #a2bbd0 #f4f7fb; scrollbar-width: thin; }
   .unified-days.itinerary-board { display: block; overflow: visible; }
   .itinerary-board .unified-day { margin-bottom: 16px; break-inside: avoid; }
 }
+
+/* Compact itinerary: quiet date divisions, readable content, minimal ornament. */
+.shell .unified-itinerary .agenda-summary { margin: 0 0 12px; padding: 0 0 10px; gap: 16px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; box-shadow: none; }
+.shell .unified-itinerary .agenda-summary > div { display: flex; align-items: baseline; gap: 5px; min-width: auto; padding: 0; border: 0; white-space: nowrap; }
+.shell .unified-itinerary .agenda-summary b { font-size: 14px; font-weight: 650; }
+.shell .unified-itinerary .agenda-summary span { font-size: 12px; font-weight: 400; color: #53657b; }
+.shell .unified-itinerary .agenda-summary > button { background: transparent; padding: 6px 0 6px 10px; font-size: 12px; font-weight: 600; }
+.shell .unified-itinerary .unified-days { gap: 10px; }
+.shell .unified-itinerary .unified-day { border-radius: 8px; box-shadow: none; }
+.shell .unified-itinerary .unified-day > header { padding: 8px 12px; gap: 10px; background: #f8fafc; }
+.shell .unified-itinerary .unified-day > header > div { display: flex; align-items: baseline; gap: 5px; width: auto; height: auto; color: #245d8b; background: transparent; border-radius: 0; }
+.shell .unified-itinerary .unified-day > header > div b { font-size: 18px; font-weight: 650; }
+.shell .unified-itinerary .unified-day > header > div span { font-size: 12px; font-weight: 500; text-transform: none; }
+.shell .unified-itinerary .unified-day > header p strong { font-size: 13px; font-weight: 600; }
+.shell .unified-itinerary .unified-day > header p small { display: none; }
+.shell .unified-itinerary .unified-day > header > button { background: transparent; border: 0; padding: 6px; min-width: 32px; min-height: 32px; font-size: 12px; font-weight: 500; }
+.shell .unified-itinerary .agenda-item { min-height: 0; padding: 10px 0; gap: 8px; }
+.shell .unified-itinerary .agenda-item h3 { margin: 0 0 3px; font-size: 14px; line-height: 1.4; white-space: normal; overflow-wrap: anywhere; }
+.shell .unified-itinerary .agenda-copy p, .shell .unified-itinerary .agenda-copy small { color: #53657b; font-size: 12px; line-height: 1.45; overflow-wrap: anywhere; }
+.shell .unified-itinerary .agenda-copy .itinerary-entry-note { margin-top: 5px; white-space: pre-wrap; }
+.shell .unified-itinerary .agenda-category { padding: 0; border: 0; border-radius: 0; background: transparent; font-size: 11px; font-weight: 500; text-transform: none; letter-spacing: 0; color: #53657b; }
+.shell .unified-itinerary .agenda-time b { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.shell .unified-itinerary .agenda-time small { font-size: 11px; color: #53657b; }
+.shell .unified-itinerary .itinerary-board .agenda-item { row-gap: 5px; }
+.shell .unified-itinerary .agenda-extras { margin-top: 16px; gap: 12px; }
+.shell .unified-itinerary .agenda-extras .card { min-height: 0; padding: 14px; border-radius: 8px; }
+.shell .unified-itinerary .agenda-extras h2 { font-size: 15px; }
+.shell .unified-itinerary .agenda-extras textarea { min-height: 80px; }
+.modal label.hours-pending-field { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.modal .hours-pending-field input { width: 16px; height: 16px; margin: 0; }
+.modal textarea[name="notes"] { min-height: 70px; resize: vertical; }
+@media (pointer: coarse) {
+  .shell .unified-itinerary .unified-day > header > button { min-width: 44px; min-height: 44px; }
+}

@@ -27,6 +27,9 @@ type Plan = {
   place: string;
   type: "Activity" | "Travel" | "Food";
   time: string;
+  endTime?: string;
+  notes?: string;
+  hoursPending?: boolean;
   done?: boolean;
   mapUrl?: string;
 };
@@ -39,6 +42,7 @@ type Reservation = {
   time: string;
   confirmation: string;
   location: string;
+  notes?: string;
   flightNumber?: string;
   arrivalTime?: string;
 };
@@ -577,8 +581,8 @@ export default function Home() {
     nav = ["Overview", "Itinerary", "Expenses", "Packing", "Notes", "Audit Log", "Mia Budget"];
   const todayKey = now ? zonedDateKey(now, timezone) : "";
   const searchText = query.trim().toLowerCase();
-  const visiblePlans = searchText ? plans.filter((item) => `${item.title} ${item.place} ${item.type} ${item.date} ${item.time}`.toLowerCase().includes(searchText)) : plans;
-  const visibleReservations = searchText ? reservations.filter((item) => `${item.title} ${item.location} ${item.kind} ${item.flightNumber || ""} ${item.confirmation} ${item.date} ${item.time}`.toLowerCase().includes(searchText)) : reservations;
+  const visiblePlans = searchText ? plans.filter((item) => `${item.title} ${item.place} ${item.notes || ""} ${item.type} ${item.date} ${item.time}`.toLowerCase().includes(searchText)) : plans;
+  const visibleReservations = searchText ? reservations.filter((item) => `${item.title} ${item.location} ${item.notes || ""} ${item.kind} ${item.flightNumber || ""} ${item.confirmation} ${item.date} ${item.time}`.toLowerCase().includes(searchText)) : reservations;
   const allAgendaEntries = chronological([
     ...plans.map((item) => ({ source: "plan" as const, item, date: item.date, time: item.time, kind: item.type, title: item.title, location: item.place })),
     ...reservations.map((item) => ({ source: "reservation" as const, item, date: item.date, time: item.time, kind: item.kind, title: item.title, location: item.location })),
@@ -719,6 +723,7 @@ export default function Home() {
     if (!isPlanKind) {
       const next: Reservation = {
         id: editedId, kind, title: String(f.get("title")), date: chosenDate,
+        notes: String(f.get("notes") || "").trim(),
         time: normalizeTime(String(f.get("time") || "")), arrivalTime: normalizeTime(String(f.get("arrivalTime") || "")),
         location: String(f.get("location") || "").trim(), confirmation: String(f.get("confirmation") || "").trim(),
         flightNumber: String(f.get("flightNumber") || "").trim(),
@@ -737,6 +742,9 @@ export default function Home() {
           place: String(f.get("place") || "").trim(),
       time: normalizeTime(String(f.get("time") || "")),
           type: kind as Plan["type"],
+          endTime: normalizeTime(String(f.get("endTime") || "")),
+          notes: String(f.get("notes") || "").trim(),
+          hoursPending: f.get("hoursPending") === "on",
           done: editing?.type === "plan" ? editing.item.done : false,
         };
     setReservations((items) => editing?.type === "reservation" ? items.filter((item) => item.id !== editedId) : items);
@@ -1217,8 +1225,8 @@ export default function Home() {
                   <div className="unified-day-items">
                     {items.map((entry) => entry.source === "plan" ? (
                       <article className="agenda-item activity" key={`plan-${entry.item.id}`}>
-                        <div className="agenda-time"><b>{friendlyTime(entry.item.time)}</b></div>
-                        <div className="agenda-copy"><h3>{entry.item.title}</h3>{entry.item.place && <p>{entry.item.place}</p>}</div>
+                        <div className="agenda-time"><b>{entry.item.hoursPending ? "Hours pending" : friendlyTime(entry.item.time)}</b>{entry.item.endTime && <small>until {friendlyTime(entry.item.endTime)}{entry.item.time && minutesFromTime(entry.item.endTime) <= minutesFromTime(entry.item.time) ? " (+1 day)" : ""}</small>}</div>
+                        <div className="agenda-copy"><h3>{entry.item.title}</h3>{entry.item.place && <p>{entry.item.place}</p>}{entry.item.notes && <p className="itinerary-entry-note">{entry.item.notes}</p>}</div>
                         <span className="agenda-category">{entry.item.type}</span>
                         <button className="edit" aria-label={`Edit ${entry.item.title}`} onClick={() => editItinerary(entry.item, "plan")}><Pencil size={15} /></button>
                         <button className={`check ${entry.item.done ? "done" : ""}`} aria-label={`Mark ${entry.item.title} complete`} onClick={() => setPlans((value) => value.map((item) => item.id === entry.item.id ? { ...item, done: !item.done } : item))}>{entry.item.done ? "✓" : ""}</button>
@@ -1226,7 +1234,7 @@ export default function Home() {
                     ) : (
                       <article className={`agenda-item booking ${entry.item.kind.toLowerCase()}`} key={`reservation-${entry.item.id}`}>
                         <div className="agenda-time"><b>{friendlyTime(entry.item.time)}</b>{entry.item.arrivalTime && <small>to {friendlyTime(entry.item.arrivalTime)}</small>}</div>
-                        <div className="agenda-copy"><h3>{entry.item.title}</h3>{entry.item.location && <p>{entry.item.location}</p>}{entry.item.flightNumber && <small>Flight <a className="flight-number" href={flightStatusUrl(entry.item.flightNumber)} target="_blank" rel="noreferrer" aria-label={`Open live status for flight ${entry.item.flightNumber}`}>{entry.item.flightNumber} ↗</a></small>}{entry.item.confirmation && <small>Confirmation: {entry.item.confirmation}</small>}</div>
+                        <div className="agenda-copy"><h3>{entry.item.title}</h3>{entry.item.location && <p>{entry.item.location}</p>}{entry.item.flightNumber && <small>Flight <a className="flight-number" href={flightStatusUrl(entry.item.flightNumber)} target="_blank" rel="noreferrer" aria-label={`Open live status for flight ${entry.item.flightNumber}`}>{entry.item.flightNumber} ↗</a></small>}{entry.item.confirmation && <small>Confirmation: {entry.item.confirmation}</small>}{entry.item.notes && <p className="itinerary-entry-note">{entry.item.notes}</p>}</div>
                         <span className="agenda-category">{entry.item.kind}</span>
                         <button className="edit" aria-label={`Edit ${entry.item.title}`} onClick={() => editItinerary(entry.item, "reservation")}><Pencil size={15} /></button>
                       </article>
@@ -1599,6 +1607,11 @@ export default function Home() {
                   {entryKind === "Flight" && <div className="formrow"><Field name="flightNumber" label="Flight number (optional)" placeholder="e.g. NH181" required={false} defaultValue={editing?.type === "reservation" ? editing.item.flightNumber : ""} /><Field name="arrivalTime" label="Arrival time (optional)" required={false} placeholder="e.g. 4:15 PM" defaultValue={editing?.type === "reservation" ? friendlyTime(editing.item.arrivalTime || "") : ""} /></div>}
                   <Field name="confirmation" label="Confirmation number (optional)" placeholder="Booking reference" required={false} defaultValue={editing?.type === "reservation" ? editing.item.confirmation : ""} />
                 </>}
+                {(entryKind === "Activity" || entryKind === "Travel" || entryKind === "Food") && <>
+                  <Field name="endTime" label="End / closing time (optional)" required={false} placeholder="e.g. 10:00 PM" defaultValue={editing?.type === "plan" && editing.item.endTime ? friendlyTime(editing.item.endTime) : ""} />
+                  <label className="hours-pending-field"><input name="hoursPending" type="checkbox" defaultChecked={editing?.type === "plan" && editing.item.hoursPending} /> Hours not confirmed yet</label>
+                </>}
+                <label>Notes (optional)<textarea name="notes" rows={2} placeholder="Room details, opening hours, or reminders…" defaultValue={editing?.type === "plan" || editing?.type === "reservation" ? editing.item.notes || "" : ""} /></label>
                 <div className="itinerary-form-actions">
                   <button className="primary">{editing ? "Save changes" : "Add to itinerary"}</button>
                   {(editing?.type === "plan" || editing?.type === "reservation") && <button type="button" className="delete-itinerary" onClick={deleteEditingItinerary}><Trash2 size={16} /> Delete itinerary item</button>}

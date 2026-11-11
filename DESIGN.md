@@ -68,3 +68,5 @@ Notes uses the existing per-trip tripNotes field and shared autosave. Edits in t
 Monthly budget history uses native expandable rows, newest first, with paycheck, bills, savings, and remaining visible. Expanded rows show immutable recorded commitment amounts and recurrence. Legacy totals stay readable without inventing missing item details. Keep all recorded months.
 
 Itinerary offers List and Horizontal views of the same day sections. Horizontal lays dates left to right in a locally scrolling region with keyboard focus and explicit earlier/later scroll buttons; edits, search, and completion remain shared. Print expands all days.
+
+Itinerary refinements use flat compact summary counts, plain blue dates, 8px corners, 10px event padding, and sentence-case text categories. Activities support optional closing times and an explicit hours-pending state; notes preserve room details and timing caveats. Never invent unpublished operating hours.
